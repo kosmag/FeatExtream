@@ -1,6 +1,5 @@
 package moa.core.approach;
 
-import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Random;
 
@@ -10,7 +9,7 @@ abstract public class Buffer {
     double relevanceRatio;
     Deque<BufferElement> elements;
     boolean fullSize;
-
+    int[] timeIndices;
 
     public void nextElement(double[] values) {
         if (!fullSize) {
@@ -31,12 +30,15 @@ abstract public class Buffer {
 
     protected abstract boolean elementRelevant(BufferElement newElement);
 
-    public double[][] getValues() {
+    public double[][] getValues(double[] current) {
         double[][] ret = new double[size][];
 //        System.out.println(elements.size());
         int index = 0;
         for (BufferElement elem : elements) {
-            ret[index] = elem.value;
+            ret[index] = elem.value.clone();
+            for(int timeIndex: timeIndices){
+                ret[index][timeIndex] -= current[timeIndex];
+            }
             index++;
         }
         for(;index < size; index++){
@@ -46,12 +48,22 @@ abstract public class Buffer {
     }
 
     // TODO: create a version with non-random buffer element selection
-    static public Buffer getBuffer(String name, int bufferSize, int attributeLength, double relevanceRatio, Random random) {
+    static public Buffer getBuffer(String name, int bufferSize, int attributeLength,
+                                   double relevanceRatio, Random random, int[] timeIndices) {
         Buffer ret = null;
         switch (name) {
             case "random":
-                ret = new RandomBuffer(bufferSize, attributeLength, relevanceRatio, random);
+                ret = new RandomBuffer(bufferSize, attributeLength, relevanceRatio, random,timeIndices);
         }
         return ret;
+    }
+
+    public void updateError(double prediction, double actual){
+        double err = prediction - actual;
+        double squaredErr = err * err;
+        for (BufferElement elem : elements) {
+            elem.predictedEvents += 1;
+            elem.squaredError += squaredErr;
+        }
     }
 }

@@ -9,6 +9,7 @@ import moa.clusterers.clustream.Clustream;
 import java.util.ArrayList;
 
 public class ClusterAggregator extends Concatenator {
+    final int setNumClusters = 3;
 
     Clustream clusterer;
     int numClusters;
@@ -48,7 +49,7 @@ public class ClusterAggregator extends Concatenator {
 
         if (clusterer == null) {
             clusterer = new Clustream();
-
+            clusterer.maxNumKernelsOption.setValue(setNumClusters);
             clusterer.prepareForUse();
             clusterer.setModelContext(originalHeader);
         }

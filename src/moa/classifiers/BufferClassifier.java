@@ -55,7 +55,7 @@ public class BufferClassifier extends AbstractClassifier implements MultiClassCl
             "Buffer", "random");
 
     public IntOption partitionIndexOpt = new IntOption("partitionIndex", 'p',
-            "Partition index", 0, 0, Integer.MAX_VALUE);
+            "Partition index", 0, -1, Integer.MAX_VALUE);
     public StringOption timeIndicesOpt = new StringOption("timeIndices", 't',
             "Time indices, comma separated", "");
 
@@ -130,7 +130,7 @@ public class BufferClassifier extends AbstractClassifier implements MultiClassCl
     }
 
     private int[] getTimeIndices(String value) {
-        if(value == "") return new int[0];
+        if (value == "") return new int[0];
         String[] strIndices = value.split(",");
         int[] ret = new int[strIndices.length];
         for (int i = 0; i < strIndices.length; i++) {
@@ -175,7 +175,7 @@ public class BufferClassifier extends AbstractClassifier implements MultiClassCl
         } else {
             if (arrivedEvents.containsKey(eventId)) {
                 ArrivedEvent event = arrivedEvents.get(eventId);
-                event.addPrediction(getResult(event.instance),binNo + 1);
+                event.addPrediction(getResult(event.instance), binNo + 1);
                 updatePerformanceMeasures();
                 arrivedEvents.remove(eventId);
 
@@ -183,7 +183,7 @@ public class BufferClassifier extends AbstractClassifier implements MultiClassCl
             for (int id : arrivedEvents.keySet()) {
                 ArrivedEvent event = arrivedEvents.get(id);
 
-                event.addPrediction(getResult(event.instance),-1);
+                event.addPrediction(getResult(event.instance), -1);
             }
         }
 
@@ -193,7 +193,7 @@ public class BufferClassifier extends AbstractClassifier implements MultiClassCl
     }
 
     private double getResult(Instance instance) {
-       return Utils.maxIndex(getVotesForInstance(instance));
+        return Utils.maxIndex(getVotesForInstance(instance));
     }
 
     private void updatePerformanceMeasures() {
@@ -245,7 +245,7 @@ public class BufferClassifier extends AbstractClassifier implements MultiClassCl
 
         double[] values = concatenator.getResult(originalValues, partitionBuffer);
 
-        Instance ret = InstanceUtils.generateInstanceFromValues(values,newHeader);
+        Instance ret = InstanceUtils.generateInstanceFromValues(values, newHeader);
 
         return ret;
     }
@@ -254,9 +254,13 @@ public class BufferClassifier extends AbstractClassifier implements MultiClassCl
         if (newHeader == null) {
             newHeader = this.getHeader(modelContext, this.concatenator);
         }
-        int partition = (int) original.value(partitionIndex);
+        int partition;
+        if (partitionIndex == -1)
+            partition = -1;
+        else
+            partition = (int) original.value(partitionIndex);
         if (!buffer.containsKey(partition)) {
-            this.buffer.put(partition, Buffer.getBuffer(bufferOpt.getValue()+"_classifier", this.bufferSize, original.numInputAttributes() + 1,
+            this.buffer.put(partition, Buffer.getBuffer(bufferOpt.getValue() + "_classifier", this.bufferSize, original.numInputAttributes() + 1,
                     this.relevanceRatio, this.classifierRandom, this.timeIndices, this.relevanceModel));
         }
         return partition;
@@ -267,7 +271,6 @@ public class BufferClassifier extends AbstractClassifier implements MultiClassCl
         int id = (int) original.value(idIndex);
         return id;
     }
-
 
 
     private void checkIntegrity(Instance expected, Instance actual) {
@@ -292,6 +295,7 @@ public class BufferClassifier extends AbstractClassifier implements MultiClassCl
         learner.setModelContext(ih);
         relevanceModel.setModelContext(ih);
     }
+
     @Override
     public ImmutableCapabilities defineImmutableCapabilities() {
         if (this.getClass() == BufferClassifier.class)

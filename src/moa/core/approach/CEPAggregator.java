@@ -9,7 +9,7 @@ import moa.clusterers.clustream.Clustream;
 import java.util.ArrayList;
 
 public class CEPAggregator extends Concatenator {
-
+    final int setNumClusters = 3;
     Clustream clusterer;
     int numClusters;
 
@@ -37,7 +37,6 @@ public class CEPAggregator extends Concatenator {
             int c1 = clusterValues[i];
             for (int j = i + 1; j < bufferInstances.length; j++) {
                 int c2 = clusterValues[j];
-                if (c2 > c1) c2 = c2 - 1;
                 cepClusterings[c1][c2]++;
             }
         }
@@ -47,8 +46,8 @@ public class CEPAggregator extends Concatenator {
     private double[][] initClusterings() {
         double[][] ret = new double[numClusters][];
         for (int i = 0; i < numClusters; i++) {
-            ret[i] = new double[numClusters - 1];
-            for (int j = 0; j < numClusters - 1; j++)
+            ret[i] = new double[numClusters];
+            for (int j = 0; j < numClusters; j++)
                 ret[i][j] = 0;
         }
         return ret;
@@ -71,7 +70,7 @@ public class CEPAggregator extends Concatenator {
 
         if (clusterer == null) {
             clusterer = new Clustream();
-            clusterer.maxNumKernelsOption.setValue(8);
+            clusterer.maxNumKernelsOption.setValue(setNumClusters);
             clusterer.prepareForUse();
             clusterer.setModelContext(originalHeader);
         }
@@ -85,7 +84,7 @@ public class CEPAggregator extends Concatenator {
             Attribute att = originalHeader.attribute(i);
             attributes.add(att);
         }
-        for (int i = 0; i < numClusters * (numClusters - 1); i++) {
+        for (int i = 0; i < numClusters * numClusters; i++) {
             Attribute att = new Attribute("Cluster" + i);
             attributes.add(att);
         }

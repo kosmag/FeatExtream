@@ -8,6 +8,8 @@ import com.yahoo.labs.samoa.instances.Instance;
 import com.yahoo.labs.samoa.instances.Instances;
 import com.yahoo.labs.samoa.instances.InstancesHeader;
 import moa.capabilities.CapabilitiesHandler;
+import moa.capabilities.Capability;
+import moa.capabilities.ImmutableCapabilities;
 import moa.core.Measurement;
 import moa.core.ObjectRepository;
 import moa.core.Utils;
@@ -26,7 +28,7 @@ public class BufferClassifier extends AbstractClassifier implements MultiClassCl
     /**
      *
      */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -7204555596974263187L;
 
     @Override
     public String getPurposeString() {
@@ -289,5 +291,12 @@ public class BufferClassifier extends AbstractClassifier implements MultiClassCl
         super.setModelContext(ih);
         learner.setModelContext(ih);
         relevanceModel.setModelContext(ih);
+    }
+    @Override
+    public ImmutableCapabilities defineImmutableCapabilities() {
+        if (this.getClass() == BufferClassifier.class)
+            return new ImmutableCapabilities(Capability.VIEW_STANDARD, Capability.VIEW_LITE);
+        else
+            return new ImmutableCapabilities(Capability.VIEW_STANDARD);
     }
 }

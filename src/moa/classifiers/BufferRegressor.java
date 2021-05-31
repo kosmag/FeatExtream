@@ -9,6 +9,7 @@ import moa.core.ObjectRepository;
 import moa.core.approach.ArrivedEvent;
 import moa.core.approach.Buffer;
 import moa.core.approach.Concatenator;
+import moa.core.approach.InstanceUtils;
 import moa.options.ClassOption;
 import moa.streams.InstanceStream;
 import moa.tasks.TaskMonitor;
@@ -23,7 +24,7 @@ public class BufferRegressor extends AbstractClassifier implements Regressor {
 
     @Override
     public String getPurposeString() {
-        return "Random Active learning classifier for evolving data streams";
+        return "Buffer regressor";
     }
 
     public ClassOption learnerOpt = new ClassOption("learner", 'l',
@@ -34,6 +35,10 @@ public class BufferRegressor extends AbstractClassifier implements Regressor {
 
     public FloatOption relevanceRatioOpt = new FloatOption("relevanceRatio", 'r',
             "Relevance ratio", 1, 0.001, 1);
+
+    public ClassOption relevanceModelOpt = new ClassOption("relevanceModel", 'm',
+            "Relevance model", Classifier.class,
+            "moa.classifiers.meta.AdaptiveRandomForestRegressor");
 
     public StringOption concatenatorOpt = new StringOption("concatenator", 'c',
             "Concatenator", "naive");
@@ -66,20 +71,22 @@ public class BufferRegressor extends AbstractClassifier implements Regressor {
     private Map<Integer, Buffer> buffer;
     Map<Integer, ArrivedEvent> arrivedEvents;
 
-    protected Instances newHeader;
+    protected InstancesHeader newHeader;
 
     public Classifier learner;
+    public Classifier relevanceModel;
 
     public BufferRegressor() {
     }
 
-    public BufferRegressor(String learnerCLI, int bufferSize, double relevanceRatio, int randomSeed,
+    public BufferRegressor(String learnerCLI, int bufferSize, double relevanceRatio, String relevanceModelCLI, int randomSeed,
                            String concatenator, String buffer, int partitionIndex, String timeIndices, int idIndex,
                            int binNo, int reevalFrequency) {
         this.learnerOpt.setValueViaCLIString(learnerCLI);
         this.bufferSizeOpt.setValue(bufferSize);
         this.randomSeedOption.setValue(randomSeed);
         this.relevanceRatioOpt.setValue(relevanceRatio);
+        this.relevanceModelOpt.setValueViaCLIString(relevanceModelCLI);
         this.concatenatorOpt.setValue(concatenator);
         this.bufferOpt.setValue(buffer);
         this.partitionIndexOpt.setValue(partitionIndex);
@@ -96,12 +103,14 @@ public class BufferRegressor extends AbstractClassifier implements Regressor {
 
         create();
         learner.prepareForUse(monitor, repository);
+        relevanceModel.prepareForUse(monitor, repository);
     }
 
     private void create() {
         this.learner = (Classifier) getPreparedClassOption(learnerOpt);
         this.bufferSize = bufferSizeOpt.getValue();
         this.relevanceRatio = relevanceRatioOpt.getValue();
+        this.relevanceModel = (Classifier) getPreparedClassOption(relevanceModelOpt);
         this.concatenator = Concatenator.getConcatenator(concatenatorOpt.getValue());
         this.buffer = new HashMap<>();
         this.partitionIndex = partitionIndexOpt.getValue();
@@ -130,7 +139,7 @@ public class BufferRegressor extends AbstractClassifier implements Regressor {
     @Override
     public double[] getVotesForInstance(Instance inst) {
 
-        Instance extractedInstance = extractInstance(getValuesFromInstance(inst), buffer.get(startAndGetPartition(inst)));
+        Instance extractedInstance = extractInstance(InstanceUtils.getValuesFromInstance(inst), buffer.get(startAndGetPartition(inst)));
         return this.learner.getVotesForInstance(extractedInstance);
     }
 
@@ -138,6 +147,8 @@ public class BufferRegressor extends AbstractClassifier implements Regressor {
     public void resetLearningImpl() {
         this.learner = ((Classifier) getPreparedClassOption(this.learnerOpt)).copy();
         this.learner.resetLearning();
+        this.relevanceModel = ((Classifier) getPreparedClassOption(this.relevanceModelOpt)).copy();
+        this.relevanceModel.resetLearning();
     }
 
 
@@ -185,7 +196,7 @@ public class BufferRegressor extends AbstractClassifier implements Regressor {
 
         Buffer partitionBuffer = buffer.get(partition);
 
-        double[] originalValues = getValuesFromInstance(inst);
+        double[] originalValues = InstanceUtils.getValuesFromInstance(inst);
         if (labeled) {
             Instance extractedInstance = extractInstance(originalValues, partitionBuffer);
 
@@ -195,9 +206,10 @@ public class BufferRegressor extends AbstractClassifier implements Regressor {
             partitionBuffer.updateError(prediction, inst.classValue());
 
             this.learner.trainOnInstance(extractedInstance);
+            this.concatenator.train(inst);
         }
         if (updatable) {
-            partitionBuffer.nextElement(originalValues);
+            partitionBuffer.nextElement(inst);
         }
     }
 
@@ -212,7 +224,7 @@ public class BufferRegressor extends AbstractClassifier implements Regressor {
         return labeled;
     }
 
-    public Instances getHeader(Instances originalHeader, Concatenator concatenator) {
+    public InstancesHeader getHeader(InstancesHeader originalHeader, Concatenator concatenator) {
 
         ArrayList<Attribute> attributes = concatenator.getAttributes(originalHeader, this.bufferSize);
 
@@ -225,19 +237,19 @@ public class BufferRegressor extends AbstractClassifier implements Regressor {
 
         double[] values = concatenator.getResult(originalValues, partitionBuffer);
 
-        Instance ret = generateInstanceFromValues(values);
+        Instance ret = InstanceUtils.generateInstanceFromValues(values,newHeader);
 
         return ret;
     }
 
     private int startAndGetPartition(Instance original) {
         if (newHeader == null) {
-            newHeader = this.getHeader(original.dataset(), this.concatenator);
+            newHeader = this.getHeader(modelContext, this.concatenator);
         }
         int partition = (int) original.value(partitionIndex);
         if (!buffer.containsKey(partition)) {
             this.buffer.put(partition, Buffer.getBuffer(bufferOpt.getValue(), this.bufferSize, original.numInputAttributes() + 1,
-                    this.relevanceRatio, this.classifierRandom, this.timeIndices));
+                    this.relevanceRatio, this.classifierRandom, this.timeIndices, this.relevanceModel));
         }
         return partition;
     }
@@ -248,24 +260,6 @@ public class BufferRegressor extends AbstractClassifier implements Regressor {
         return id;
     }
 
-    private double[] getValuesFromInstance(Instance instance) {
-        double[] ret = new double[instance.numAttributes()];
-
-        int ix = 0;
-        for (int i = 0; i < instance.dataset().numAttributes(); i++) {
-
-            ret[ix] = instance.value(i);
-            ix++;
-
-        }
-        return ret;
-    }
-
-    private Instance generateInstanceFromValues(double[] values) {
-        Instance instnc = new DenseInstance(1.0, values);
-        instnc.setDataset(newHeader);
-        return instnc;
-    }
 
 
     private void checkIntegrity(Instance expected, Instance actual) {
@@ -288,5 +282,6 @@ public class BufferRegressor extends AbstractClassifier implements Regressor {
     public void setModelContext(InstancesHeader ih) {
         super.setModelContext(ih);
         learner.setModelContext(ih);
+        relevanceModel.setModelContext(ih);
     }
 }

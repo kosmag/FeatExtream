@@ -1,6 +1,7 @@
 package moa.core.approach;
 
 import com.yahoo.labs.samoa.instances.Attribute;
+import com.yahoo.labs.samoa.instances.Instance;
 import com.yahoo.labs.samoa.instances.Instances;
 import com.yahoo.labs.samoa.instances.InstancesHeader;
 import moa.streams.InstanceStream;
@@ -20,7 +21,7 @@ public class NaiveConcatenator extends Concatenator {
         return res;
     }
 
-    public ArrayList<Attribute> getAttributes(Instances originalHeader, int bufferSize) {
+    public ArrayList<Attribute> getAttributes(InstancesHeader originalHeader, int bufferSize) {
 
         ArrayList<Attribute> attributes = new ArrayList<>();
 
@@ -35,5 +36,10 @@ public class NaiveConcatenator extends Concatenator {
             }
         }
         return attributes;
+    }
+
+    @Override
+    public void train(Instance inst) {
+        return;
     }
 }

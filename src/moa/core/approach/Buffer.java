@@ -67,11 +67,14 @@ abstract public class Buffer {
                                    double relevanceRatio, Random random, int[] timeIndices, Classifier relevanceModel) {
         Buffer ret = null;
         switch (name) {
-            case "random":
+            case "random": case "random_classifier":
                 ret = new RandomBuffer(bufferSize, attributeLength, relevanceRatio, random, timeIndices);
                 break;
             case "relevance":
                 ret = new RelevanceBuffer(bufferSize, attributeLength, relevanceRatio, random, timeIndices, relevanceModel);
+                break;
+            case "relevance_classifier":
+                ret = new RelevanceClassificationBuffer(bufferSize, attributeLength, relevanceRatio, random, timeIndices, relevanceModel);
                 break;
         }
         return ret;
@@ -80,9 +83,13 @@ abstract public class Buffer {
     public void updateError(double prediction, double actual) {
         double err = prediction - actual;
         double squaredErr = err * err;
+        boolean correct = prediction == actual;
         for (BufferElement elem : elements) {
             elem.predictedEvents += 1;
             elem.squaredError += squaredErr;
+            if(correct){
+                elem.correctlyPredictedEvents += 1;
+            }
         }
     }
 }

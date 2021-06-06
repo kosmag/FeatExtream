@@ -15,7 +15,7 @@ public class RelevanceClassificationBuffer extends Buffer {
     Classifier relevanceModel;
 
     public RelevanceClassificationBuffer(int bufferSize, int attributeLength, double relevanceRatio, Random random, int[] timeIndices,
-                                         Classifier relevanceModel) {
+                                         Classifier relevanceModel, int[] bufferIndices) {
         this.size = bufferSize;
         this.attributeLength = attributeLength;
         this.relevanceRatio = relevanceRatio;
@@ -24,6 +24,7 @@ public class RelevanceClassificationBuffer extends Buffer {
         this.fullSize = false;
         this.random = random;
         this.timeIndices = timeIndices;
+        this.bufferIndices = bufferIndices;
         this.relevanceModel = relevanceModel;
     }
 

@@ -56,8 +56,12 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
 
     public IntOption partitionIndexOpt = new IntOption("partitionIndex", 'p',
             "Partition index", 0, -1, Integer.MAX_VALUE);
+
     public StringOption timeIndicesOpt = new StringOption("timeIndices", 't',
             "Time indices, comma separated", "");
+
+    public StringOption bufferIndicesOpt = new StringOption("bufferIndices", 'y',
+            "Buffer attribute indices, comma separated, -1 for all", "-1");
 
     public IntOption idIndexOpt = new IntOption("idIndex", 'i',
             "Id index", 0, 0, Integer.MAX_VALUE);
@@ -74,6 +78,7 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
     private int bufferSize;
     private int partitionIndex;
     private int[] timeIndices;
+    private int[] bufferIndices;
     private int idIndex;
     private int binNo;
     private int clusterNo;
@@ -92,8 +97,8 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
     }
 
     public BufferLearner(String learnerCLI, int bufferSize, double relevanceRatio, String relevanceModelCLI, int randomSeed,
-                         String concatenator, String buffer, int partitionIndex, String timeIndices, int idIndex,
-                         int binNo,int clusterNo, int reevalFrequency) {
+                         String concatenator, String buffer, int partitionIndex, String timeIndices, String bufferIndices,
+                         int idIndex, int binNo,int clusterNo, int reevalFrequency) {
         this.learnerOpt.setValueViaCLIString(learnerCLI);
         this.bufferSizeOpt.setValue(bufferSize);
         this.randomSeedOption.setValue(randomSeed);
@@ -103,6 +108,7 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
         this.bufferOpt.setValue(buffer);
         this.partitionIndexOpt.setValue(partitionIndex);
         this.timeIndicesOpt.setValue(timeIndices);
+        this.bufferIndicesOpt.setValue(bufferIndices);
         this.idIndexOpt.setValue(idIndex);
         this.binNoOpt.setValue(binNo);
         this.clusterNoOpt.setValue(clusterNo);
@@ -129,6 +135,7 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
         this.buffer = new HashMap<>();
         this.partitionIndex = partitionIndexOpt.getValue();
         this.timeIndices = getTimeIndices(timeIndicesOpt.getValue());
+        this.bufferIndices = getTimeIndices(bufferIndicesOpt.getValue());
         this.arrivedEvents = new HashMap<>();
         this.idIndex = idIndexOpt.getValue();
         this.binNo = binNoOpt.getValue();
@@ -223,7 +230,6 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
             partitionBuffer.updateError(prediction, inst.classValue());
 
             this.learner.trainOnInstance(extractedInstance);
-            this.concatenator.train(inst);
         }
         if (updatable) {
             partitionBuffer.nextElement(inst);
@@ -273,7 +279,7 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
             if(!(learner instanceof Regressor));
             bufferType += "_classifier";
             this.buffer.put(partition, Buffer.getBuffer(bufferType, this.bufferSize, original.numInputAttributes() + 1,
-                    this.relevanceRatio, this.classifierRandom, this.timeIndices, this.relevanceModel));
+                    this.relevanceRatio, this.classifierRandom, this.timeIndices, this.relevanceModel, this.bufferIndices));
         }
         return partition;
     }

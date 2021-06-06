@@ -33,5 +33,4 @@ abstract public class Concatenator {
         return ret;
     }
 
-    public abstract void train(Instance inst);
 }

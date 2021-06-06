@@ -21,10 +21,12 @@ public class ClusterAggregator extends Concatenator {
     }
 
     public double[] getResult(double[] event, Buffer buffer) {
-        Instance[] bufferInstances = buffer.getInstances();
+        Instance[] bufferInstances = buffer.getInstances(event);
         double[] bufferClusters = getClusters(bufferInstances);
         double[][] newEventArray = {event, bufferClusters};
         double[] res = EventInstance.concatenate(newEventArray);
+        for(Instance inst : bufferInstances)
+            clusterer.trainOnInstance(inst);
         return res;
     }
 
@@ -73,8 +75,4 @@ public class ClusterAggregator extends Concatenator {
         return attributes;
     }
 
-    @Override
-    public void train(Instance inst) {
-        clusterer.trainOnInstance(inst);
-    }
 }

@@ -15,7 +15,7 @@ public class RelevanceBuffer extends Buffer {
     Classifier relevanceModel;
 
     public RelevanceBuffer(int bufferSize, int attributeLength, double relevanceRatio, Random random, int[] timeIndices,
-                           Classifier relevanceModel) {
+                           Classifier relevanceModel, int[] bufferIndices) {
         this.size = bufferSize;
         this.attributeLength = attributeLength;
         this.relevanceRatio = relevanceRatio;
@@ -24,6 +24,7 @@ public class RelevanceBuffer extends Buffer {
         this.fullSize = false;
         this.random = random;
         this.timeIndices = timeIndices;
+        this.bufferIndices = bufferIndices;
         this.relevanceModel = relevanceModel;
     }
 
@@ -32,7 +33,7 @@ public class RelevanceBuffer extends Buffer {
         Instance relevanceInstance = lastElement.instance.copy();
         double rmse = getRmse(lastElement);
         rmseBuffer.addFirst(rmse);
-        if(rmseBuffer.size() > rmseBufferSize)
+        if (rmseBuffer.size() > rmseBufferSize)
             rmseBuffer.removeLast();
         relevanceInstance.setClassValue(relevanceInstance.classIndex(), rmse);
         relevanceModel.trainOnInstance(relevanceInstance);
@@ -49,17 +50,17 @@ public class RelevanceBuffer extends Buffer {
 
         double relevanceThreshold = getRelevanceThreshold();
         rmseBuffer.addFirst(relevancePred);
-        if(rmseBuffer.size() > rmseBufferSize)
+        if (rmseBuffer.size() > rmseBufferSize)
             rmseBuffer.removeLast();
 
         return relevancePred <= relevanceThreshold;
     }
 
     private double getRelevanceThreshold() {
-        if(rmseBuffer.size() == 0 || relevanceRatio == 1)
+        if (rmseBuffer.size() == 0 || relevanceRatio == 1)
             return Double.MAX_VALUE;
         Double[] sortedBuffer = rmseBuffer.stream().sorted().toArray(Double[]::new);
-        int targetIndex = (int)((double)sortedBuffer.length * relevanceRatio);
+        int targetIndex = (int) ((double) sortedBuffer.length * relevanceRatio);
         return sortedBuffer[targetIndex];
 
     }

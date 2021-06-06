@@ -10,7 +10,7 @@ public class InstanceUtils {
         double[] ret = new double[instance.numAttributes()];
 
         int ix = 0;
-        for (int i = 0; i < instance.dataset().numAttributes(); i++) {
+        for (int i = 0; i < instance.numAttributes(); i++) {
 
             ret[ix] = instance.value(i);
             ix++;

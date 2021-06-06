@@ -38,8 +38,4 @@ public class NaiveConcatenator extends Concatenator {
         return attributes;
     }
 
-    @Override
-    public void train(Instance inst) {
-        return;
-    }
 }

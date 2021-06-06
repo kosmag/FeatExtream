@@ -23,7 +23,7 @@ public class FeatureExtractionConcatenator extends Concatenator {
     }
 
     public double[] getResult(double[] event, Buffer buffer) {
-        Instance[] bufferInstances = buffer.getInstances();
+        Instance[] bufferInstances = buffer.getInstances(event);
         int maxBufferSize = buffer.size;
         double[] bufferClusters = getClusters(bufferInstances, maxBufferSize);
         double[][] newEventArray = {event, bufferClusters};
@@ -77,8 +77,5 @@ public class FeatureExtractionConcatenator extends Concatenator {
         return attributes;
     }
 
-    @Override
-    public void train(Instance inst) {
-        clusterer.trainOnInstance(inst);
-    }
+
 }

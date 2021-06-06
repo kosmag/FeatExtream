@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class RandomBuffer extends Buffer {
     Random random;
-    public RandomBuffer(int bufferSize, int attributeLength, double relevanceRatio, Random random, int[] timeIndices) {
+    public RandomBuffer(int bufferSize, int attributeLength, double relevanceRatio, Random random, int[] timeIndices, int[] bufferIndices) {
         this.size = bufferSize;
         this.attributeLength = attributeLength;
         this.relevanceRatio = relevanceRatio;
@@ -14,6 +14,7 @@ public class RandomBuffer extends Buffer {
         this.fullSize = false;
         this.random = random;
         this.timeIndices = timeIndices;
+        this.bufferIndices = bufferIndices;
     }
 
     @Override

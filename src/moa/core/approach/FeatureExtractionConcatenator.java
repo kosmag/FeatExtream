@@ -15,9 +15,11 @@ public class FeatureExtractionConcatenator extends Concatenator {
 
     Clustream clusterer;
     int numClusters;
+    int setNumClusters;
 
-    public FeatureExtractionConcatenator() {
+    public FeatureExtractionConcatenator(int clusterNo) {
         super();
+        this.setNumClusters = clusterNo;
     }
 
     public double[] getResult(double[] event, Buffer buffer) {
@@ -54,7 +56,7 @@ public class FeatureExtractionConcatenator extends Concatenator {
 
         if (clusterer == null) {
             clusterer = new Clustream();
-
+            clusterer.maxNumKernelsOption.setValue(setNumClusters);
             clusterer.prepareForUse();
             clusterer.setModelContext(originalHeader);
         }

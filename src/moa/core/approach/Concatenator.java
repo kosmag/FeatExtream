@@ -13,20 +13,20 @@ abstract public class Concatenator {
 
     abstract public ArrayList<Attribute> getAttributes(InstancesHeader originalHeader, int bufferSize);
 
-    static public Concatenator getConcatenator(String name) {
+    static public Concatenator getConcatenator(String name, int clusterNo) {
         Concatenator ret = null;
         switch (name) {
             case "naive":
                 ret = new NaiveConcatenator();
                 break;
             case "featureExtraction":
-                ret = new FeatureExtractionConcatenator();
+                ret = new FeatureExtractionConcatenator(clusterNo);
                 break;
             case "cluster":
-                ret = new ClusterAggregator();
+                ret = new ClusterAggregator(clusterNo);
                 break;
             case "cep":
-                ret = new CEPAggregator();
+                ret = new CEPAggregator(clusterNo);
                 break;
 
         }

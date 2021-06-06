@@ -9,13 +9,15 @@ import moa.clusterers.clustream.Clustream;
 import java.util.ArrayList;
 
 public class ClusterAggregator extends Concatenator {
-    final int setNumClusters = 3;
+    int setNumClusters;
 
     Clustream clusterer;
     int numClusters;
 
-    public ClusterAggregator() {
+    public ClusterAggregator(int clusterNo) {
         super();
+        this.setNumClusters = clusterNo;
+
     }
 
     public double[] getResult(double[] event, Buffer buffer) {
@@ -50,6 +52,7 @@ public class ClusterAggregator extends Concatenator {
         if (clusterer == null) {
             clusterer = new Clustream();
             clusterer.maxNumKernelsOption.setValue(setNumClusters);
+//            clusterer.kernelRadiFactorOption.setValue(10);
             clusterer.prepareForUse();
             clusterer.setModelContext(originalHeader);
         }

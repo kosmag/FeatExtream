@@ -65,6 +65,9 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
     public IntOption binNoOpt = new IntOption("binNo", 'z',
             "Bin number", 5, 1, Integer.MAX_VALUE);
 
+    public IntOption clusterNoOpt = new IntOption("clusterNo", 'x',
+            "Cluster number", 5, 1, Integer.MAX_VALUE);
+
     public IntOption reevalFrequencyOpt = new IntOption("reevalFrequency", 'f',
             "Reeavluation frequency", 10, 1, Integer.MAX_VALUE);
 
@@ -73,6 +76,7 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
     private int[] timeIndices;
     private int idIndex;
     private int binNo;
+    private int clusterNo;
     private int reevalFrequency;
     private double relevanceRatio;
     private Concatenator concatenator;
@@ -89,7 +93,7 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
 
     public BufferLearner(String learnerCLI, int bufferSize, double relevanceRatio, String relevanceModelCLI, int randomSeed,
                          String concatenator, String buffer, int partitionIndex, String timeIndices, int idIndex,
-                         int binNo, int reevalFrequency) {
+                         int binNo,int clusterNo, int reevalFrequency) {
         this.learnerOpt.setValueViaCLIString(learnerCLI);
         this.bufferSizeOpt.setValue(bufferSize);
         this.randomSeedOption.setValue(randomSeed);
@@ -101,6 +105,7 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
         this.timeIndicesOpt.setValue(timeIndices);
         this.idIndexOpt.setValue(idIndex);
         this.binNoOpt.setValue(binNo);
+        this.clusterNoOpt.setValue(clusterNo);
         this.reevalFrequencyOpt.setValue(reevalFrequency);
     }
 
@@ -119,7 +124,8 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
         this.bufferSize = bufferSizeOpt.getValue();
         this.relevanceRatio = relevanceRatioOpt.getValue();
         this.relevanceModel = (Classifier) getPreparedClassOption(relevanceModelOpt);
-        this.concatenator = Concatenator.getConcatenator(concatenatorOpt.getValue());
+        this.clusterNo = clusterNoOpt.getValue();
+        this.concatenator = Concatenator.getConcatenator(concatenatorOpt.getValue(),this.clusterNo);
         this.buffer = new HashMap<>();
         this.partitionIndex = partitionIndexOpt.getValue();
         this.timeIndices = getTimeIndices(timeIndicesOpt.getValue());

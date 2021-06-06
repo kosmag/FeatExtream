@@ -9,12 +9,14 @@ import moa.clusterers.clustream.Clustream;
 import java.util.ArrayList;
 
 public class CEPAggregator extends Concatenator {
-    final int setNumClusters = 3;
+     int setNumClusters;
     Clustream clusterer;
     int numClusters;
 
-    public CEPAggregator() {
+    public CEPAggregator(int clusterNo) {
         super();
+        this.setNumClusters = clusterNo;
+
     }
 
     public double[] getResult(double[] event, Buffer buffer) {

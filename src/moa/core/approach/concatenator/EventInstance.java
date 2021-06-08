@@ -1,4 +1,4 @@
-package moa.core.approach;
+package moa.core.approach.concatenator;
 
 import java.util.Arrays;
 

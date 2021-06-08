@@ -1,4 +1,4 @@
-package moa.core.approach;
+package moa.core.approach.buffer;
 
 import java.util.ArrayDeque;
 import java.util.Random;

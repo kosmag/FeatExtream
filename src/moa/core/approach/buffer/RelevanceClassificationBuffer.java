@@ -1,4 +1,4 @@
-package moa.core.approach;
+package moa.core.approach.buffer;
 
 import com.yahoo.labs.samoa.instances.Instance;
 import moa.classifiers.Classifier;

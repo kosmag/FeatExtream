@@ -1,4 +1,4 @@
-package moa.core.approach;
+package moa.core.approach.util;
 
 
 import com.yahoo.labs.samoa.instances.DenseInstance;

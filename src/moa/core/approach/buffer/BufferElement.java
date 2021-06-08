@@ -1,6 +1,7 @@
-package moa.core.approach;
+package moa.core.approach.buffer;
 
 import com.yahoo.labs.samoa.instances.Instance;
+import moa.core.approach.util.InstanceUtils;
 
 import java.util.Map;
 

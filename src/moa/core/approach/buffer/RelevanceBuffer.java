@@ -1,9 +1,10 @@
-package moa.core.approach;
+package moa.core.approach.buffer;
 
 import com.yahoo.labs.samoa.instances.Attribute;
 import com.yahoo.labs.samoa.instances.Instance;
 import com.yahoo.labs.samoa.instances.Instances;
 import moa.classifiers.Classifier;
+import moa.core.approach.util.InstanceUtils;
 
 import java.util.*;
 

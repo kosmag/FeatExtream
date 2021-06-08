@@ -1,7 +1,8 @@
-package moa.core.approach;
+package moa.core.approach.concatenator;
 
 import com.yahoo.labs.samoa.instances.Attribute;
 import com.yahoo.labs.samoa.instances.InstancesHeader;
+import moa.core.approach.buffer.Buffer;
 
 import java.util.ArrayList;
 

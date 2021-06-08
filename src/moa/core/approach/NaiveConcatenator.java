@@ -1,13 +1,9 @@
 package moa.core.approach;
 
 import com.yahoo.labs.samoa.instances.Attribute;
-import com.yahoo.labs.samoa.instances.Instance;
-import com.yahoo.labs.samoa.instances.Instances;
 import com.yahoo.labs.samoa.instances.InstancesHeader;
-import moa.streams.InstanceStream;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class NaiveConcatenator extends Concatenator {
     public NaiveConcatenator() {

@@ -1,11 +1,11 @@
 package moa.core.approach;
 
 import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.Random;
 
 public class RandomBuffer extends Buffer {
     Random random;
+
     public RandomBuffer(int bufferSize, int attributeLength, double relevanceRatio, Random random, int[] timeIndices, int[] bufferIndices) {
         this.size = bufferSize;
         this.attributeLength = attributeLength;

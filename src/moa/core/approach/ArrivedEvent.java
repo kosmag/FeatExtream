@@ -12,6 +12,7 @@ public class ArrivedEvent {
     double firstPrediction;
     List<Double> iterPrediction;
     double lastPrediction;
+
     public ArrivedEvent(Instance inst, int reevalFrequency, int totalBinNo) {
         this.instance = inst;
         this.reevalFrequency = reevalFrequency;
@@ -20,12 +21,10 @@ public class ArrivedEvent {
     }
 
     public void addPrediction(double prediction, int binNo) {
-        if (binNo == 0){
+        if (binNo == 0) {
             firstPrediction = prediction;
-        }
-        else if(binNo == totalBinNo + 1){
+        } else if (binNo == totalBinNo + 1) {
             lastPrediction = prediction;
-        }
-        else iterPrediction.add(prediction);
+        } else iterPrediction.add(prediction);
     }
 }

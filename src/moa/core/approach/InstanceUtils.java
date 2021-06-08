@@ -7,7 +7,6 @@ import com.yahoo.labs.samoa.instances.Instances;
 
 import java.util.Arrays;
 import java.util.stream.Stream;
-import java.util.DoubleSummaryStatistics;
 
 public class InstanceUtils {
     public static double[] getValuesFromInstance(Instance instance) {
@@ -34,7 +33,6 @@ public class InstanceUtils {
         if (instArray.length == 0)
             return instArray;
         for (int i = 0; i < instArray[0].numAttributes(); i++) {
-//            if (instArray[0].classIndex() == i) continue;
             int finalI = i;
             Stream<Double> values = Arrays.stream(instArray).map(inst -> inst.value(finalI));
             double mean = values.mapToDouble(v -> v).average().getAsDouble();

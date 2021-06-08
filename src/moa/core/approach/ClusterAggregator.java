@@ -4,7 +4,6 @@ import com.yahoo.labs.samoa.instances.Attribute;
 import com.yahoo.labs.samoa.instances.Instance;
 import com.yahoo.labs.samoa.instances.InstancesHeader;
 import moa.cluster.Clustering;
-import moa.clusterers.clustream.Clustream;
 import moa.clusterers.clustree.ClusTree;
 
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 public class ClusterAggregator extends Concatenator {
     int setNumClusters;
 
-//    Clustream clusterer;
+    //    Clustream clusterer;
     ClusTree clusterer;
     int numClusters;
 
@@ -27,7 +26,7 @@ public class ClusterAggregator extends Concatenator {
         double[] bufferClusters = getClusters(bufferInstances);
         double[][] newEventArray = {event, bufferClusters};
         double[] res = EventInstance.concatenate(newEventArray);
-        for(Instance inst : bufferInstances)
+        for (Instance inst : bufferInstances)
             clusterer.trainOnInstance(inst);
         return res;
     }
@@ -35,7 +34,7 @@ public class ClusterAggregator extends Concatenator {
     private double[] getClusters(Instance[] bufferInstances) {
         double[] clusterings = new double[numClusters];
         Clustering clusters = clusterer.getMicroClusteringResult();
-        if( clusters == null)
+        if (clusters == null)
             return clusterings;
         for (Instance inst : bufferInstances) {
             int maxClusterIndex = -1;
@@ -47,7 +46,7 @@ public class ClusterAggregator extends Concatenator {
                     maxClusterIndex = j;
                 }
             }
-            if(maxClusterIndex != -1)
+            if (maxClusterIndex != -1)
                 clusterings[maxClusterIndex % numClusters]++;
         }
         return clusterings;

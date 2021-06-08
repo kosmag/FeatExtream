@@ -1,7 +1,6 @@
 package moa.core.approach;
 
 import com.yahoo.labs.samoa.instances.Instance;
-import scala.Int;
 
 import java.util.Map;
 

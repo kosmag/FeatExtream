@@ -1,6 +1,8 @@
 package moa.core.approach;
 
-import com.yahoo.labs.samoa.instances.*;
+import com.yahoo.labs.samoa.instances.Attribute;
+import com.yahoo.labs.samoa.instances.Instance;
+import com.yahoo.labs.samoa.instances.Instances;
 import moa.classifiers.Classifier;
 
 import java.util.*;
@@ -32,7 +34,7 @@ public class RelevanceBuffer extends Buffer {
         rmseBuffer.addFirst(rmse);
         if (rmseBuffer.size() > rmseBufferSize)
             rmseBuffer.removeLast();
-        Instance trainInstance = getRelevanceInstance(relevanceInstance,rmse);
+        Instance trainInstance = getRelevanceInstance(relevanceInstance, rmse);
 
         relevanceModel.trainOnInstance(trainInstance);
     }
@@ -45,14 +47,14 @@ public class RelevanceBuffer extends Buffer {
         }
         Attribute att = new Attribute("value");
         attributes.add(att);
-        Instances format = new Instances("",attributes, 0);
+        Instances format = new Instances("", attributes, 0);
         format.setClassIndex(relevanceInstance.numAttributes());
         double[] values = InstanceUtils.getValuesFromInstance(relevanceInstance);
         double[] trainValues = new double[values.length + 1];
         trainValues[values.length] = value;
-        for(int i = 0; i< values.length; i++)
+        for (int i = 0; i < values.length; i++)
             trainValues[i] = values[i];
-        return InstanceUtils.generateInstanceFromValues(trainValues,format);
+        return InstanceUtils.generateInstanceFromValues(trainValues, format);
     }
 
     private double getRmse(BufferElement lastElement) {
@@ -61,7 +63,7 @@ public class RelevanceBuffer extends Buffer {
 
     @Override
     protected boolean elementRelevant(BufferElement newElement) {
-        Instance relevanceInstance = getRelevanceInstance(newElement.instance,0);
+        Instance relevanceInstance = getRelevanceInstance(newElement.instance, 0);
         double relevancePred = Arrays.stream(relevanceModel.getVotesForInstance(relevanceInstance)).average().getAsDouble();
 
         double relevanceThreshold = getRelevanceThreshold();

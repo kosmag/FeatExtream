@@ -9,7 +9,7 @@ import moa.clusterers.clustream.Clustream;
 import java.util.ArrayList;
 
 public class CEPAggregator extends Concatenator {
-     int setNumClusters;
+    int setNumClusters;
     Clustream clusterer;
     int numClusters;
 

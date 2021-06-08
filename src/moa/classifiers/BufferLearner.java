@@ -29,52 +29,38 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
      *
      */
     private static final long serialVersionUID = 1L;
-
-    @Override
-    public String getPurposeString() {
-        return "Buffer learner";
-    }
-
     public ClassOption learnerOpt = new ClassOption("learner", 'l',
             "Learner to train.", Classifier.class,
             "moa.classifiers.meta.AdaptiveRandomForest");
     public IntOption bufferSizeOpt = new IntOption("bufferSize", 'n',
             "Buffer size", 10, 1, Integer.MAX_VALUE);
-
     public FloatOption relevanceRatioOpt = new FloatOption("relevanceRatio", 'r',
             "Relevance ratio", 1, 0.001, 1);
-
     public ClassOption relevanceModelOpt = new ClassOption("relevanceModel", 'm',
             "Relevance model", Classifier.class,
             "moa.classifiers.meta.AdaptiveRandomForestRegressor");
-
     public StringOption concatenatorOpt = new StringOption("concatenator", 'c',
             "Concatenator", "naive");
-
     public StringOption bufferOpt = new StringOption("buffer", 'b',
             "Buffer", "random");
-
     public IntOption partitionIndexOpt = new IntOption("partitionIndex", 'p',
             "Partition index", 0, -1, Integer.MAX_VALUE);
-
     public StringOption timeIndicesOpt = new StringOption("timeIndices", 't',
             "Time indices, comma separated", "");
-
     public StringOption bufferIndicesOpt = new StringOption("bufferIndices", 'y',
             "Buffer attribute indices, comma separated, -1 for all", "-1");
-
     public IntOption idIndexOpt = new IntOption("idIndex", 'i',
             "Id index", 0, 0, Integer.MAX_VALUE);
-
     public IntOption binNoOpt = new IntOption("binNo", 'z',
             "Bin number", 5, 1, Integer.MAX_VALUE);
-
     public IntOption clusterNoOpt = new IntOption("clusterNo", 'x',
             "Cluster number", 5, 1, Integer.MAX_VALUE);
-
     public IntOption reevalFrequencyOpt = new IntOption("reevalFrequency", 'f',
             "Reeavluation frequency", 10, 1, Integer.MAX_VALUE);
-
+    public Classifier learner;
+    public Classifier relevanceModel;
+    protected InstancesHeader newHeader;
+    Map<Integer, ArrivedEvent> arrivedEvents;
     private int bufferSize;
     private int partitionIndex;
     private int[] timeIndices;
@@ -86,19 +72,12 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
     private double relevanceRatio;
     private Concatenator concatenator;
     private Map<Integer, Buffer> buffer;
-    Map<Integer, ArrivedEvent> arrivedEvents;
-
-    protected InstancesHeader newHeader;
-
-    public Classifier learner;
-    public Classifier relevanceModel;
-
     public BufferLearner() {
     }
 
     public BufferLearner(String learnerCLI, int bufferSize, double relevanceRatio, String relevanceModelCLI, int randomSeed,
                          String concatenator, String buffer, int partitionIndex, String timeIndices, String bufferIndices,
-                         int idIndex, int binNo,int clusterNo, int reevalFrequency) {
+                         int idIndex, int binNo, int clusterNo, int reevalFrequency) {
         this.learnerOpt.setValueViaCLIString(learnerCLI);
         this.bufferSizeOpt.setValue(bufferSize);
         this.randomSeedOption.setValue(randomSeed);
@@ -113,6 +92,11 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
         this.binNoOpt.setValue(binNo);
         this.clusterNoOpt.setValue(clusterNo);
         this.reevalFrequencyOpt.setValue(reevalFrequency);
+    }
+
+    @Override
+    public String getPurposeString() {
+        return "Buffer learner";
     }
 
     @Override
@@ -131,7 +115,7 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
         this.relevanceRatio = relevanceRatioOpt.getValue();
         this.relevanceModel = (Classifier) getPreparedClassOption(relevanceModelOpt);
         this.clusterNo = clusterNoOpt.getValue();
-        this.concatenator = Concatenator.getConcatenator(concatenatorOpt.getValue(),this.clusterNo);
+        this.concatenator = Concatenator.getConcatenator(concatenatorOpt.getValue(), this.clusterNo);
         this.buffer = new HashMap<>();
         this.partitionIndex = partitionIndexOpt.getValue();
         this.timeIndices = getTimeIndices(timeIndicesOpt.getValue());
@@ -276,7 +260,7 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
             partition = (int) original.value(partitionIndex);
         if (!buffer.containsKey(partition)) {
             String bufferType = bufferOpt.getValue();
-            if(!(learner instanceof Regressor))
+            if (!(learner instanceof Regressor))
                 bufferType += "_classifier";
             this.buffer.put(partition, Buffer.getBuffer(bufferType, this.bufferSize, original.numInputAttributes() + 1,
                     this.relevanceRatio, this.classifierRandom, this.timeIndices, this.relevanceModel, this.bufferIndices));

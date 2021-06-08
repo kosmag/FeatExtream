@@ -276,8 +276,8 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
             partition = (int) original.value(partitionIndex);
         if (!buffer.containsKey(partition)) {
             String bufferType = bufferOpt.getValue();
-            if(!(learner instanceof Regressor));
-            bufferType += "_classifier";
+            if(!(learner instanceof Regressor))
+                bufferType += "_classifier";
             this.buffer.put(partition, Buffer.getBuffer(bufferType, this.bufferSize, original.numInputAttributes() + 1,
                     this.relevanceRatio, this.classifierRandom, this.timeIndices, this.relevanceModel, this.bufferIndices));
         }

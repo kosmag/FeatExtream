@@ -5,13 +5,15 @@ import com.yahoo.labs.samoa.instances.Instance;
 import com.yahoo.labs.samoa.instances.InstancesHeader;
 import moa.cluster.Clustering;
 import moa.clusterers.clustream.Clustream;
+import moa.clusterers.clustree.ClusTree;
 
 import java.util.ArrayList;
 
 public class ClusterAggregator extends Concatenator {
     int setNumClusters;
 
-    Clustream clusterer;
+//    Clustream clusterer;
+    ClusTree clusterer;
     int numClusters;
 
     public ClusterAggregator(int clusterNo) {
@@ -33,8 +35,10 @@ public class ClusterAggregator extends Concatenator {
     private double[] getClusters(Instance[] bufferInstances) {
         double[] clusterings = new double[numClusters];
         Clustering clusters = clusterer.getMicroClusteringResult();
+        if( clusters == null)
+            return clusterings;
         for (Instance inst : bufferInstances) {
-            int maxClusterIndex = 0;
+            int maxClusterIndex = -1;
             double maxClusterValue = 0;
             for (int j = 0; j < clusters.size(); j++) {
                 double prob = clusters.get(j).getInclusionProbability(inst);
@@ -43,8 +47,8 @@ public class ClusterAggregator extends Concatenator {
                     maxClusterIndex = j;
                 }
             }
-
-            clusterings[maxClusterIndex]++;
+            if(maxClusterIndex != -1)
+                clusterings[maxClusterIndex % numClusters]++;
         }
         return clusterings;
     }
@@ -52,15 +56,17 @@ public class ClusterAggregator extends Concatenator {
     public ArrayList<Attribute> getAttributes(InstancesHeader originalHeader, int bufferSize) {
 
         if (clusterer == null) {
-            clusterer = new Clustream();
-            clusterer.maxNumKernelsOption.setValue(setNumClusters);
+//            clusterer = new Clustream();
+            clusterer = new ClusTree();
+//            clusterer.maxNumKernelsOption.setValue(setNumClusters);
+//            clusterer.maxHeightOption.setValue(15);
 //            clusterer.kernelRadiFactorOption.setValue(10);
             clusterer.prepareForUse();
             clusterer.setModelContext(originalHeader);
         }
 
-        numClusters = clusterer.maxNumKernelsOption.getValue();
-
+//        numClusters = clusterer.maxNumKernelsOption.getValue();
+        numClusters = setNumClusters;
 
         ArrayList<Attribute> attributes = new ArrayList<>();
 

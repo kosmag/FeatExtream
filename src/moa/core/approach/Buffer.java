@@ -1,7 +1,11 @@
 package moa.core.approach;
 
+import com.yahoo.labs.samoa.instances.Attribute;
 import com.yahoo.labs.samoa.instances.Instance;
+import com.yahoo.labs.samoa.instances.Instances;
+import com.yahoo.labs.samoa.instances.InstancesHeader;
 import moa.classifiers.Classifier;
+import moa.streams.InstanceStream;
 import org.apache.commons.lang3.ArrayUtils;
 import scala.Tuple2;
 
@@ -41,6 +45,14 @@ abstract public class Buffer {
                     bufferInstance.deleteAttributeAt(i);
                 }
         }
+        ArrayList<Attribute> attributes = new ArrayList<>();
+        for (int i = 0; i < bufferInstance.numAttributes(); i++) {
+            Attribute att = new Attribute("Cluster" + i);
+            attributes.add(att);
+        }
+
+        Instances format = new Instances("",attributes, 0);
+        bufferInstance.setDataset(format);
         return new BufferElement(bufferInstance, elementTimeIndices);
     }
 
@@ -94,7 +106,8 @@ abstract public class Buffer {
 
             ret[index++] = inst;
         }
-        return ret;
+        Instance[] normRet = InstanceUtils.normalize(ret);
+        return normRet;
     }
 
     // TODO: create a version with non-random buffer element selection

@@ -1,12 +1,9 @@
 package moa.core.approach;
 
-import com.yahoo.labs.samoa.instances.Instance;
+import com.yahoo.labs.samoa.instances.*;
 import moa.classifiers.Classifier;
 
-import java.util.ArrayDeque;
-import java.util.Arrays;
-import java.util.Deque;
-import java.util.Random;
+import java.util.*;
 
 public class RelevanceBuffer extends Buffer {
     int rmseBufferSize = 1000;
@@ -35,9 +32,27 @@ public class RelevanceBuffer extends Buffer {
         rmseBuffer.addFirst(rmse);
         if (rmseBuffer.size() > rmseBufferSize)
             rmseBuffer.removeLast();
-        relevanceInstance.setClassValue(relevanceInstance.classIndex(), rmse);
-        relevanceModel.trainOnInstance(relevanceInstance);
+        Instance trainInstance = getRelevanceInstance(relevanceInstance,rmse);
 
+        relevanceModel.trainOnInstance(trainInstance);
+    }
+
+    private Instance getRelevanceInstance(Instance relevanceInstance, double value) {
+        ArrayList<Attribute> attributes = new ArrayList<>();
+        for (int i = 0; i < relevanceInstance.numAttributes(); i++) {
+            Attribute att = new Attribute("Cluster" + i);
+            attributes.add(att);
+        }
+        Attribute att = new Attribute("value");
+        attributes.add(att);
+        Instances format = new Instances("",attributes, 0);
+        format.setClassIndex(relevanceInstance.numAttributes());
+        double[] values = InstanceUtils.getValuesFromInstance(relevanceInstance);
+        double[] trainValues = new double[values.length + 1];
+        trainValues[values.length] = value;
+        for(int i = 0; i< values.length; i++)
+            trainValues[i] = values[i];
+        return InstanceUtils.generateInstanceFromValues(trainValues,format);
     }
 
     private double getRmse(BufferElement lastElement) {
@@ -46,7 +61,8 @@ public class RelevanceBuffer extends Buffer {
 
     @Override
     protected boolean elementRelevant(BufferElement newElement) {
-        double relevancePred = Arrays.stream(relevanceModel.getVotesForInstance(newElement.instance)).average().getAsDouble();
+        Instance relevanceInstance = getRelevanceInstance(newElement.instance,0);
+        double relevancePred = Arrays.stream(relevanceModel.getVotesForInstance(relevanceInstance)).average().getAsDouble();
 
         double relevanceThreshold = getRelevanceThreshold();
         rmseBuffer.addFirst(relevancePred);

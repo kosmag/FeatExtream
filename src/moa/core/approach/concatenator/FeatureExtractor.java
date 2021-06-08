@@ -6,21 +6,21 @@ import moa.core.approach.buffer.Buffer;
 
 import java.util.ArrayList;
 
-abstract public class Concatenator {
-    static public Concatenator getConcatenator(String name, int clusterNo) {
-        Concatenator ret = null;
+abstract public class FeatureExtractor {
+    static public FeatureExtractor getConcatenator(String name, int clusterNo, String clusterType) {
+        FeatureExtractor ret = null;
         switch (name) {
             case "naive":
                 ret = new NaiveConcatenator();
                 break;
             case "featureExtraction":
-                ret = new FeatureExtractionConcatenator(clusterNo);
+                ret = new FeatureExtractionConcatenator(clusterType, clusterNo);
                 break;
             case "cluster":
-                ret = new ClusterAggregator(clusterNo);
+                ret = new ClusterAggregator(clusterType, clusterNo);
                 break;
             case "cep":
-                ret = new CEPAggregator(clusterNo);
+                ret = new CEPAggregator(clusterType, clusterNo);
                 break;
 
         }

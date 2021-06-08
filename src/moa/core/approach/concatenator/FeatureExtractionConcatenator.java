@@ -6,62 +6,39 @@ import com.yahoo.labs.samoa.instances.InstancesHeader;
 import moa.cluster.Clustering;
 import moa.clusterers.clustream.Clustream;
 import moa.core.approach.buffer.Buffer;
+import moa.core.approach.clusterer.ClusterHelper;
 import moa.core.approach.util.InstanceUtils;
 
 import java.util.ArrayList;
 
-public class FeatureExtractionConcatenator extends Concatenator {
+public class FeatureExtractionConcatenator extends FeatureExtractor {
 
-    Clustream clusterer;
+    ClusterHelper clusterer;
     int numClusters;
-    int setNumClusters;
 
-    public FeatureExtractionConcatenator(int clusterNo) {
+    public FeatureExtractionConcatenator(String clusterType, int numClusters) {
         super();
-        this.setNumClusters = clusterNo;
+        this.numClusters = numClusters;
+        this.clusterer = new ClusterHelper(clusterType, numClusters);
     }
 
     public double[] getResult(double[] event, Buffer buffer) {
         Instance[] bufferInstances = buffer.getInstances(event);
         int maxBufferSize = buffer.size;
-        double[] bufferClusters = getClusters(bufferInstances, maxBufferSize);
+        double[] bufferClusters = clusterer.getConcatenatedClusters(bufferInstances, maxBufferSize);
         double[][] newEventArray = {event, bufferClusters};
         double[] res = InstanceUtils.concatenate(newEventArray);
+        for (Instance inst : bufferInstances)
+            clusterer.train(inst);
         return res;
     }
 
-    private double[] getClusters(Instance[] bufferInstances, int maxBufferSize) {
-        double[] clusterings = new double[maxBufferSize];
-        Clustering clusters = clusterer.getMicroClusteringResult();
-        int index = 0;
-        for (Instance inst : bufferInstances) {
-            int maxClusterIndex = 0;
-            double maxClusterValue = 0;
-            for (int j = 0; j < clusters.size(); j++) {
-                double prob = clusters.get(j).getInclusionProbability(inst);
-                if (prob > maxClusterValue) {
-                    maxClusterValue = prob;
-                    maxClusterIndex = j;
-                }
-            }
-
-            clusterings[index] = maxClusterIndex;
-            index++;
-        }
-        return clusterings;
-    }
 
     public ArrayList<Attribute> getAttributes(InstancesHeader originalHeader, int bufferSize) {
 
-        if (clusterer == null) {
-            clusterer = new Clustream();
-            clusterer.maxNumKernelsOption.setValue(setNumClusters);
-            clusterer.prepareForUse();
-            clusterer.setModelContext(originalHeader);
+        if (!clusterer.isSetUp) {
+            clusterer.setup(originalHeader);
         }
-
-        numClusters = clusterer.maxNumKernelsOption.getValue();
-
 
         ArrayList<Attribute> attributes = new ArrayList<>();
 

@@ -7,7 +7,7 @@ import moa.core.approach.util.InstanceUtils;
 
 import java.util.ArrayList;
 
-public class NaiveConcatenator extends Concatenator {
+public class NaiveConcatenator extends FeatureExtractor {
     public NaiveConcatenator() {
     }
 

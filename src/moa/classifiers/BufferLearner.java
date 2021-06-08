@@ -15,7 +15,7 @@ import moa.core.ObjectRepository;
 import moa.core.Utils;
 import moa.core.approach.ArrivedEvent;
 import moa.core.approach.buffer.Buffer;
-import moa.core.approach.concatenator.Concatenator;
+import moa.core.approach.concatenator.FeatureExtractor;
 import moa.core.approach.util.InstanceUtils;
 import moa.options.ClassOption;
 import moa.streams.InstanceStream;
@@ -57,6 +57,8 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
             "Cluster number", 5, 1, Integer.MAX_VALUE);
     public IntOption reevalFrequencyOpt = new IntOption("reevalFrequency", 'f',
             "Reeavluation frequency", 10, 1, Integer.MAX_VALUE);
+    public StringOption clusterTypeOpt = new StringOption("clusterType", 'q',
+            "Cluster type", "clustree");
     public Classifier learner;
     public Classifier relevanceModel;
     protected InstancesHeader newHeader;
@@ -70,14 +72,14 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
     private int clusterNo;
     private int reevalFrequency;
     private double relevanceRatio;
-    private Concatenator concatenator;
+    private FeatureExtractor featureExtractor;
     private Map<Integer, Buffer> buffer;
     public BufferLearner() {
     }
 
     public BufferLearner(String learnerCLI, int bufferSize, double relevanceRatio, String relevanceModelCLI, int randomSeed,
                          String concatenator, String buffer, int partitionIndex, String timeIndices, String bufferIndices,
-                         int idIndex, int binNo, int clusterNo, int reevalFrequency) {
+                         int idIndex, int binNo, int clusterNo, int reevalFrequency, String clusterType) {
         this.learnerOpt.setValueViaCLIString(learnerCLI);
         this.bufferSizeOpt.setValue(bufferSize);
         this.randomSeedOption.setValue(randomSeed);
@@ -92,6 +94,7 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
         this.binNoOpt.setValue(binNo);
         this.clusterNoOpt.setValue(clusterNo);
         this.reevalFrequencyOpt.setValue(reevalFrequency);
+        this.clusterTypeOpt.setValue(clusterType);
     }
 
     @Override
@@ -115,7 +118,7 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
         this.relevanceRatio = relevanceRatioOpt.getValue();
         this.relevanceModel = (Classifier) getPreparedClassOption(relevanceModelOpt);
         this.clusterNo = clusterNoOpt.getValue();
-        this.concatenator = Concatenator.getConcatenator(concatenatorOpt.getValue(), this.clusterNo);
+        this.featureExtractor = FeatureExtractor.getConcatenator(concatenatorOpt.getValue(), this.clusterNo, clusterTypeOpt.getValue());
         this.buffer = new HashMap<>();
         this.partitionIndex = partitionIndexOpt.getValue();
         this.timeIndices = getTimeIndices(timeIndicesOpt.getValue());
@@ -231,9 +234,9 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
         return labeled;
     }
 
-    public InstancesHeader getHeader(InstancesHeader originalHeader, Concatenator concatenator) {
+    public InstancesHeader getHeader(InstancesHeader originalHeader, FeatureExtractor featureExtractor) {
 
-        ArrayList<Attribute> attributes = concatenator.getAttributes(originalHeader, this.bufferSize);
+        ArrayList<Attribute> attributes = featureExtractor.getAttributes(originalHeader, this.bufferSize);
 
         Instances format = new Instances(getCLICreationString(InstanceStream.class), attributes, 0);
         format.setClassIndex(originalHeader.classIndex());
@@ -242,7 +245,7 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
 
     private Instance extractInstance(double[] originalValues, Buffer partitionBuffer) {
 
-        double[] values = concatenator.getResult(originalValues, partitionBuffer);
+        double[] values = featureExtractor.getResult(originalValues, partitionBuffer);
 
         Instance ret = InstanceUtils.generateInstanceFromValues(values, newHeader);
 
@@ -251,7 +254,7 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
 
     private int startAndGetPartition(Instance original) {
         if (newHeader == null) {
-            newHeader = this.getHeader(modelContext, this.concatenator);
+            newHeader = this.getHeader(modelContext, this.featureExtractor);
         }
         int partition;
         if (partitionIndex == -1)

@@ -6,80 +6,39 @@ import com.yahoo.labs.samoa.instances.InstancesHeader;
 import moa.cluster.Clustering;
 import moa.clusterers.clustream.Clustream;
 import moa.core.approach.buffer.Buffer;
+import moa.core.approach.clusterer.ClusterHelper;
 import moa.core.approach.util.InstanceUtils;
 
 import java.util.ArrayList;
 
-public class CEPAggregator extends Concatenator {
-    int setNumClusters;
-    Clustream clusterer;
+public class CEPAggregator extends FeatureExtractor {
+    ClusterHelper clusterer;
     int numClusters;
 
-    public CEPAggregator(int clusterNo) {
+    public CEPAggregator(String clusterType, int numClusters) {
         super();
-        this.setNumClusters = clusterNo;
-
+        this.numClusters = numClusters;
+        this.clusterer = new ClusterHelper(clusterType, numClusters);
     }
 
     public double[] getResult(double[] event, Buffer buffer) {
         Instance[] bufferInstances = buffer.getInstances(event);
-        double[] bufferClusters = getClusters(bufferInstances);
+        double[] bufferClusters = clusterer.getCEPClusters(bufferInstances);
         double[][] newEventArray = {event, bufferClusters};
         double[] res = InstanceUtils.concatenate(newEventArray);
+        for (Instance inst : bufferInstances)
+            clusterer.train(inst);
         return res;
     }
 
-    private double[] getClusters(Instance[] bufferInstances) {
-        Clustering clusters = clusterer.getMicroClusteringResult();
-        int[] clusterValues = new int[bufferInstances.length];
-        for (int i = 0; i < bufferInstances.length; i++) {
-            clusterValues[i] = getCluster(bufferInstances[i], clusters);
-        }
-        double[][] cepClusterings = initClusterings();
 
-        for (int i = 0; i < bufferInstances.length; i++) {
-            int c1 = clusterValues[i];
-            for (int j = i + 1; j < bufferInstances.length; j++) {
-                int c2 = clusterValues[j];
-                cepClusterings[c1][c2]++;
-            }
-        }
-        return InstanceUtils.concatenate(cepClusterings);
-    }
 
-    private double[][] initClusterings() {
-        double[][] ret = new double[numClusters][];
-        for (int i = 0; i < numClusters; i++) {
-            ret[i] = new double[numClusters];
-            for (int j = 0; j < numClusters; j++)
-                ret[i][j] = 0;
-        }
-        return ret;
-    }
-
-    public int getCluster(Instance inst, Clustering clusters) {
-        int maxClusterIndex = 0;
-        double maxClusterValue = 0;
-        for (int j = 0; j < clusters.size(); j++) {
-            double prob = clusters.get(j).getInclusionProbability(inst);
-            if (prob > maxClusterValue) {
-                maxClusterValue = prob;
-                maxClusterIndex = j;
-            }
-        }
-        return maxClusterIndex;
-    }
 
     public ArrayList<Attribute> getAttributes(InstancesHeader originalHeader, int bufferSize) {
 
-        if (clusterer == null) {
-            clusterer = new Clustream();
-            clusterer.maxNumKernelsOption.setValue(setNumClusters);
-            clusterer.prepareForUse();
-            clusterer.setModelContext(originalHeader);
+        if (!clusterer.isSetUp) {
+            clusterer.setup(originalHeader);
         }
-
-        numClusters = clusterer.maxNumKernelsOption.getValue();
 
 
         ArrayList<Attribute> attributes = new ArrayList<>();

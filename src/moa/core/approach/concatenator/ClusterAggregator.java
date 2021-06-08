@@ -6,6 +6,7 @@ import com.yahoo.labs.samoa.instances.InstancesHeader;
 import moa.cluster.Clustering;
 import moa.clusterers.clustree.ClusTree;
 import moa.core.approach.buffer.Buffer;
+import moa.core.approach.util.InstanceUtils;
 
 import java.util.ArrayList;
 
@@ -26,7 +27,7 @@ public class ClusterAggregator extends Concatenator {
         Instance[] bufferInstances = buffer.getInstances(event);
         double[] bufferClusters = getClusters(bufferInstances);
         double[][] newEventArray = {event, bufferClusters};
-        double[] res = EventInstance.concatenate(newEventArray);
+        double[] res = InstanceUtils.concatenate(newEventArray);
         for (Instance inst : bufferInstances)
             clusterer.trainOnInstance(inst);
         return res;

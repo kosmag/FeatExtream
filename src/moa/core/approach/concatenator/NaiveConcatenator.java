@@ -3,6 +3,7 @@ package moa.core.approach.concatenator;
 import com.yahoo.labs.samoa.instances.Attribute;
 import com.yahoo.labs.samoa.instances.InstancesHeader;
 import moa.core.approach.buffer.Buffer;
+import moa.core.approach.util.InstanceUtils;
 
 import java.util.ArrayList;
 
@@ -12,9 +13,9 @@ public class NaiveConcatenator extends Concatenator {
 
     public double[] getResult(double[] event, Buffer buffer) {
         double[][] bufferValues = buffer.getValues(event);
-        double[] concatbuffer = EventInstance.concatenate(bufferValues);
+        double[] concatbuffer = InstanceUtils.concatenate(bufferValues);
         double[][] newEventArray = {event, concatbuffer};
-        double[] res = EventInstance.concatenate(newEventArray);
+        double[] res = InstanceUtils.concatenate(newEventArray);
         return res;
     }
 

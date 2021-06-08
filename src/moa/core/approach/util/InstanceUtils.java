@@ -49,6 +49,10 @@ public class InstanceUtils {
         }
         return instArray;
     }
-
+    public static double[] concatenate(double[][] buffer) {
+        return Arrays.stream(buffer)
+                .flatMapToDouble(Arrays::stream)
+                .toArray();
+    }
 
 }

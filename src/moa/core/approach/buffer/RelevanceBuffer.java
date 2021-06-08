@@ -10,32 +10,34 @@ import java.util.*;
 
 public class RelevanceBuffer extends Buffer {
     int rmseBufferSize = 1000;
-    Deque<Double> rmseBuffer;
+    Deque<Double> metricBuffer;
     Random random;
     Classifier relevanceModel;
+    boolean isRegressor;
 
     public RelevanceBuffer(int bufferSize, int attributeLength, double relevanceRatio, Random random, int[] timeIndices,
-                           Classifier relevanceModel, int[] bufferIndices) {
+                           Classifier relevanceModel, int[] bufferIndices, boolean isRegressor) {
         this.size = bufferSize;
         this.attributeLength = attributeLength;
         this.relevanceRatio = relevanceRatio;
         this.elements = new ArrayDeque<>();
-        this.rmseBuffer = new ArrayDeque<>();
+        this.metricBuffer = new ArrayDeque<>();
         this.fullSize = false;
         this.random = random;
         this.timeIndices = timeIndices;
         this.bufferIndices = bufferIndices;
         this.relevanceModel = relevanceModel;
+        this.isRegressor = isRegressor;
     }
 
     @Override
     protected void trainRelevance(BufferElement lastElement) {
         Instance relevanceInstance = lastElement.instance.copy();
-        double rmse = getRmse(lastElement);
-        rmseBuffer.addFirst(rmse);
-        if (rmseBuffer.size() > rmseBufferSize)
-            rmseBuffer.removeLast();
-        Instance trainInstance = getRelevanceInstance(relevanceInstance, rmse);
+        double metric = getMetric(lastElement, isRegressor);
+        metricBuffer.addFirst(metric);
+        if (metricBuffer.size() > rmseBufferSize)
+            metricBuffer.removeLast();
+        Instance trainInstance = getRelevanceInstance(relevanceInstance, metric);
 
         relevanceModel.trainOnInstance(trainInstance);
     }
@@ -58,8 +60,11 @@ public class RelevanceBuffer extends Buffer {
         return InstanceUtils.generateInstanceFromValues(trainValues, format);
     }
 
-    private double getRmse(BufferElement lastElement) {
-        return Math.sqrt(lastElement.squaredError / (double) lastElement.predictedEvents);
+    private double getMetric(BufferElement lastElement, boolean isRegressor) {
+        if(isRegressor) // RMSE
+            return Math.sqrt(lastElement.squaredError / (double) lastElement.predictedEvents);
+        else // accuracy
+            return (double) lastElement.correctlyPredictedEvents / (double) lastElement.predictedEvents;
     }
 
     @Override
@@ -68,20 +73,31 @@ public class RelevanceBuffer extends Buffer {
         double relevancePred = Arrays.stream(relevanceModel.getVotesForInstance(relevanceInstance)).average().getAsDouble();
 
         double relevanceThreshold = getRelevanceThreshold();
-        rmseBuffer.addFirst(relevancePred);
-        if (rmseBuffer.size() > rmseBufferSize)
-            rmseBuffer.removeLast();
+        metricBuffer.addFirst(relevancePred);
+        if (metricBuffer.size() > rmseBufferSize)
+            metricBuffer.removeLast();
 
-        return relevancePred <= relevanceThreshold;
+        if(isRegressor)
+            return relevancePred <= relevanceThreshold;
+        else
+            return relevancePred >= relevanceThreshold;
     }
 
     private double getRelevanceThreshold() {
-        if (rmseBuffer.size() == 0 || relevanceRatio == 1)
-            return Double.MAX_VALUE;
-        Double[] sortedBuffer = rmseBuffer.stream().sorted().toArray(Double[]::new);
-        int targetIndex = (int) ((double) sortedBuffer.length * relevanceRatio);
-        return sortedBuffer[targetIndex];
-
+        if(isRegressor) { //Check if RMSE in bottom r percentage
+            if (metricBuffer.size() == 0 || relevanceRatio == 1)
+                return Double.MAX_VALUE;
+            Double[] sortedBuffer = metricBuffer.stream().sorted().toArray(Double[]::new);
+            int targetIndex = (int) ((double) sortedBuffer.length * relevanceRatio);
+            return sortedBuffer[targetIndex];
+        }
+        else{ //Check if accuracy in top r percentage
+            if (metricBuffer.size() == 0 || relevanceRatio == 1)
+                return Double.MIN_VALUE;
+            Double[] sortedBuffer = metricBuffer.stream().sorted().toArray(Double[]::new);
+            int targetIndex = (int) ((double) sortedBuffer.length * (1.0 - relevanceRatio));
+            return sortedBuffer[targetIndex];
+        }
     }
 
 }

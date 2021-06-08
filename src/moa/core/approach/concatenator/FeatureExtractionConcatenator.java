@@ -6,6 +6,7 @@ import com.yahoo.labs.samoa.instances.InstancesHeader;
 import moa.cluster.Clustering;
 import moa.clusterers.clustream.Clustream;
 import moa.core.approach.buffer.Buffer;
+import moa.core.approach.util.InstanceUtils;
 
 import java.util.ArrayList;
 
@@ -25,7 +26,7 @@ public class FeatureExtractionConcatenator extends Concatenator {
         int maxBufferSize = buffer.size;
         double[] bufferClusters = getClusters(bufferInstances, maxBufferSize);
         double[][] newEventArray = {event, bufferClusters};
-        double[] res = EventInstance.concatenate(newEventArray);
+        double[] res = InstanceUtils.concatenate(newEventArray);
         return res;
     }
 

@@ -6,6 +6,7 @@ import com.yahoo.labs.samoa.instances.InstancesHeader;
 import moa.cluster.Clustering;
 import moa.clusterers.clustream.Clustream;
 import moa.core.approach.buffer.Buffer;
+import moa.core.approach.util.InstanceUtils;
 
 import java.util.ArrayList;
 
@@ -24,7 +25,7 @@ public class CEPAggregator extends Concatenator {
         Instance[] bufferInstances = buffer.getInstances(event);
         double[] bufferClusters = getClusters(bufferInstances);
         double[][] newEventArray = {event, bufferClusters};
-        double[] res = EventInstance.concatenate(newEventArray);
+        double[] res = InstanceUtils.concatenate(newEventArray);
         return res;
     }
 
@@ -43,7 +44,7 @@ public class CEPAggregator extends Concatenator {
                 cepClusterings[c1][c2]++;
             }
         }
-        return EventInstance.concatenate(cepClusterings);
+        return InstanceUtils.concatenate(cepClusterings);
     }
 
     private double[][] initClusterings() {

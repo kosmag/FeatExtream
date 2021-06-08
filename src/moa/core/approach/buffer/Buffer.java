@@ -21,18 +21,14 @@ abstract public class Buffer {
     // TODO: create a version with non-random buffer element selection
     static public Buffer getBuffer(String name, int bufferSize, int attributeLength,
                                    double relevanceRatio, Random random, int[] timeIndices, Classifier relevanceModel,
-                                   int[] bufferIndices) {
+                                   int[] bufferIndices, boolean isRegressor) {
         Buffer ret = null;
         switch (name) {
             case "random":
-            case "random_classifier":
                 ret = new RandomBuffer(bufferSize, attributeLength, relevanceRatio, random, timeIndices, bufferIndices);
                 break;
             case "relevance":
-                ret = new RelevanceBuffer(bufferSize, attributeLength, relevanceRatio, random, timeIndices, relevanceModel, bufferIndices);
-                break;
-            case "relevance_classifier":
-                ret = new RelevanceClassificationBuffer(bufferSize, attributeLength, relevanceRatio, random, timeIndices, relevanceModel, bufferIndices);
+                ret = new RelevanceBuffer(bufferSize, attributeLength, relevanceRatio, random, timeIndices, relevanceModel, bufferIndices,isRegressor);
                 break;
         }
         return ret;

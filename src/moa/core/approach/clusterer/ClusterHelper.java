@@ -52,12 +52,16 @@ public class ClusterHelper {
 
 
     public double[] getCEPClusters(Instance[] bufferInstances) {
-        Clustering clusters = clusterer.getMicroClusteringResult();
-        int[] clusterValues = new int[bufferInstances.length];
-        for (int i = 0; i < bufferInstances.length; i++) {
-            clusterValues[i] = getMaxClusterIndex(bufferInstances[i], clusters);
-        }
         double[][] cepClusterings = initClusterings();
+        Clustering clusters = clusterer.getMicroClusteringResult();
+        if (clusters == null)
+            return InstanceUtils.concatenate(cepClusterings);
+
+        int[] clusterValues = new int[bufferInstances.length];
+
+        for (int i = 0; i < bufferInstances.length; i++) {
+            clusterValues[i] = getMaxClusterIndex(bufferInstances[i], clusters) % numClusters;
+        }
 
         for (int i = 0; i < bufferInstances.length; i++) {
             int c1 = clusterValues[i];
@@ -74,6 +78,8 @@ public class ClusterHelper {
     public double[] getConcatenatedClusters(Instance[] bufferInstances, int maxBufferSize) {
         double[] clusterings = new double[maxBufferSize];
         Clustering clusters = clusterer.getMicroClusteringResult();
+        if (clusters == null)
+            return clusterings;
         for (int i = 0; i < bufferInstances.length; i++) {
             clusterings[i] = getMaxClusterIndex(bufferInstances[0], clusters);
         }
@@ -104,7 +110,10 @@ public class ClusterHelper {
     }
 
 
+    int counter = 0;
+
     public void train(Instance inst) {
+//        System.out.println(counter++);
         clusterer.trainOnInstance(inst);
     }
 }

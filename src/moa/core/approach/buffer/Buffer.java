@@ -104,12 +104,14 @@ abstract public class Buffer {
             index++;
         }
         for (; index < size; index++) {
-            ret[index] = new double[attributeLength];
+            ret[index] = new double[bufferIndices.length];
         }
         return ret;
     }
-
+ int counter = 0;
     public Instance[] getInstances(double[] current) {
+
+//        System.out.println(counter++);
         Instance[] ret = new Instance[elements.size()];
         int index = 0;
         for (BufferElement elem : elements) {

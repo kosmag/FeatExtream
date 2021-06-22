@@ -193,8 +193,13 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
     }
 
     private double getResult(Instance instance) {
-        if (learner instanceof Regressor)
-            return Arrays.stream(learner.getVotesForInstance(instance)).average().getAsDouble();
+        if (learner instanceof Regressor) {
+            OptionalDouble result =Arrays.stream(learner.getVotesForInstance(instance)).average();
+            if (result.isPresent())
+                return result.getAsDouble();
+            else
+                return 0;
+        }
         else
             return Utils.maxIndex(getVotesForInstance(instance));
     }

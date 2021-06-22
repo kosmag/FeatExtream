@@ -70,7 +70,10 @@ public class RelevanceBuffer extends Buffer {
     @Override
     protected boolean elementRelevant(BufferElement newElement) {
         Instance relevanceInstance = getRelevanceInstance(newElement.instance, 0);
-        double relevancePred = Arrays.stream(relevanceModel.getVotesForInstance(relevanceInstance)).average().getAsDouble();
+
+        OptionalDouble result =Arrays.stream(relevanceModel.getVotesForInstance(relevanceInstance)).average();
+
+        double relevancePred = result.isPresent()? result.getAsDouble(): 0;
 
         double relevanceThreshold = getRelevanceThreshold();
         metricBuffer.addFirst(relevancePred);

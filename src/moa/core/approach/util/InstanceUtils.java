@@ -35,20 +35,29 @@ public class InstanceUtils {
         for (int i = 0; i < instArray[0].numAttributes(); i++) {
             int finalI = i;
             Stream<Double> values = Arrays.stream(instArray).map(inst -> inst.value(finalI));
-            double mean = values.mapToDouble(v -> v).average().getAsDouble();
+            double mean = values.mapToDouble(v -> {
+                if (v.isNaN()) return 0;
+                else return v;
+            }).average().getAsDouble();
             values = Arrays.stream(instArray).map(inst -> inst.value(finalI));
             double variance = values
                     .map(v -> v - mean)
                     .map(v -> v * v)
-                    .mapToDouble(v -> v).average().getAsDouble();
+                    .mapToDouble(v -> {
+                        if (v.isNaN()) return 0;
+                        else return v;
+                    }).average().getAsDouble();
             double eps = 1e-6;
             double stdev = Math.max(Math.sqrt(variance), eps);
             for (Instance inst : instArray) {
-                inst.setValue(i, (inst.value(i) - mean) / stdev);
+                Double toSet = (inst.value(i) - mean) / stdev;
+                if (toSet.isNaN()) toSet  = 0d;
+                inst.setValue(i, toSet);
             }
         }
         return instArray;
     }
+
     public static double[] concatenate(double[][] buffer) {
         return Arrays.stream(buffer)
                 .flatMapToDouble(Arrays::stream)

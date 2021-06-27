@@ -49,28 +49,19 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
             "Time indices, comma separated", "");
     public StringOption bufferIndicesOpt = new StringOption("bufferIndices", 'y',
             "Buffer attribute indices, comma separated, -1 for all", "-1");
-    public IntOption idIndexOpt = new IntOption("idIndex", 'i',
-            "Id index", 0, 0, Integer.MAX_VALUE);
-    public IntOption binNoOpt = new IntOption("binNo", 'z',
-            "Bin number", 5, 1, Integer.MAX_VALUE);
     public IntOption clusterNoOpt = new IntOption("clusterNo", 'x',
             "Cluster number", 5, 1, Integer.MAX_VALUE);
-    public IntOption reevalFrequencyOpt = new IntOption("reevalFrequency", 'f',
-            "Reeavluation frequency", 10, 1, Integer.MAX_VALUE);
+
     public StringOption clusterTypeOpt = new StringOption("clusterType", 'q',
             "Cluster type", "clustree");
     public Classifier learner;
     public Classifier relevanceModel;
     protected InstancesHeader newHeader;
-    Map<Integer, ArrivedEvent> arrivedEvents;
     private int bufferSize;
     private int partitionIndex;
     private int[] timeIndices;
     private int[] bufferIndices;
-    private int idIndex;
-    private int binNo;
     private int clusterNo;
-    private int reevalFrequency;
     private double relevanceRatio;
     private FeatureExtractor featureExtractor;
     private Map<Integer, Buffer> buffer;
@@ -79,7 +70,7 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
 
     public BufferLearner(String learnerCLI, int bufferSize, double relevanceRatio, String relevanceModelCLI, int randomSeed,
                          String concatenator, String buffer, int partitionIndex, String timeIndices, String bufferIndices,
-                         int idIndex, int binNo, int clusterNo, int reevalFrequency, String clusterType) {
+                         int clusterNo, String clusterType) {
         this.learnerOpt.setValueViaCLIString(learnerCLI);
         this.bufferSizeOpt.setValue(bufferSize);
         this.randomSeedOption.setValue(randomSeed);
@@ -90,10 +81,7 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
         this.partitionIndexOpt.setValue(partitionIndex);
         this.timeIndicesOpt.setValue(timeIndices);
         this.bufferIndicesOpt.setValue(bufferIndices);
-        this.idIndexOpt.setValue(idIndex);
-        this.binNoOpt.setValue(binNo);
         this.clusterNoOpt.setValue(clusterNo);
-        this.reevalFrequencyOpt.setValue(reevalFrequency);
         this.clusterTypeOpt.setValue(clusterType);
     }
 
@@ -123,10 +111,6 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
         this.partitionIndex = partitionIndexOpt.getValue();
         this.timeIndices = getTimeIndices(timeIndicesOpt.getValue());
         this.bufferIndices = getTimeIndices(bufferIndicesOpt.getValue());
-        this.arrivedEvents = new HashMap<>();
-        this.idIndex = idIndexOpt.getValue();
-        this.binNo = binNoOpt.getValue();
-        this.reevalFrequency = reevalFrequencyOpt.getValue();
     }
 
     private int[] getTimeIndices(String value) {
@@ -164,28 +148,8 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
     public void trainOnInstanceImpl(Instance inst) {
         boolean labeled = isLabeled(inst);
         boolean updatable = true;
-        int eventId = getId(inst);
 
-        if (!labeled) {
-            if (!arrivedEvents.containsKey(eventId)) {
-                arrivedEvents.put(eventId, new ArrivedEvent(inst, reevalFrequency, binNo));
-                ArrivedEvent event = arrivedEvents.get(eventId);
-                event.addPrediction(getResult(event.instance), 0);
-            }
-        } else {
-            if (arrivedEvents.containsKey(eventId)) {
-                ArrivedEvent event = arrivedEvents.get(eventId);
-                event.addPrediction(getResult(event.instance), binNo + 1);
-                updatePerformanceMeasures();
-                arrivedEvents.remove(eventId);
 
-            }
-            for (int id : arrivedEvents.keySet()) {
-                ArrivedEvent event = arrivedEvents.get(id);
-
-                event.addPrediction(getResult(event.instance), -1);
-            }
-        }
 
         updateBufferAndTrain(inst, labeled, updatable);
 
@@ -204,8 +168,7 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
             return Utils.maxIndex(getVotesForInstance(instance));
     }
 
-    private void updatePerformanceMeasures() {
-    }
+
 
     private void updateBufferAndTrain(Instance inst, boolean labeled, boolean updatable) {
         int partition = startAndGetPartition(inst);
@@ -276,10 +239,7 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
     }
 
 
-    private int getId(Instance original) {
-        int id = (int) original.value(idIndex);
-        return id;
-    }
+
 
 
     private void checkIntegrity(Instance expected, Instance actual) {

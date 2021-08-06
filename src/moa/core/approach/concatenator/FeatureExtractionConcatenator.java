@@ -6,6 +6,7 @@ import com.yahoo.labs.samoa.instances.InstancesHeader;
 import moa.cluster.Clustering;
 import moa.clusterers.clustream.Clustream;
 import moa.core.approach.buffer.Buffer;
+import moa.core.approach.buffer.BufferElement;
 import moa.core.approach.clusterer.ClusterHelper;
 import moa.core.approach.util.InstanceUtils;
 
@@ -21,6 +22,7 @@ public class FeatureExtractionConcatenator extends FeatureExtractor {
         this.numClusters = numClusters;
         this.clusterer = new ClusterHelper(clusterType, numClusters);
     }
+    int  counter = 0;
 
     public double[] getResult(double[] event, Buffer buffer) {
         Instance[] bufferInstances = buffer.getInstances(event);
@@ -28,8 +30,15 @@ public class FeatureExtractionConcatenator extends FeatureExtractor {
         double[] bufferClusters = clusterer.getConcatenatedClusters(bufferInstances, maxBufferSize);
         double[][] newEventArray = {event, bufferClusters};
         double[] res = InstanceUtils.concatenate(newEventArray);
-        for (Instance inst : bufferInstances)
-            clusterer.train(inst);
+        int index = 0;
+        for (BufferElement elem : buffer.elements) {
+            if (!elem.trainedCluster) {
+                counter++;
+                clusterer.train(bufferInstances[index]);
+                elem.trainedCluster = true;
+            }
+            index++;
+        }
         return res;
     }
 

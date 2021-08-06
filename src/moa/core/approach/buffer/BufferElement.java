@@ -12,6 +12,7 @@ public class BufferElement {
     int correctlyPredictedEvents;
     double squaredError;
     Map<Integer, Integer> timeIndices;
+    public boolean trainedCluster;
 
     BufferElement(Instance instance, Map<Integer, Integer> timeIndices) {
         this.instance = instance;
@@ -20,5 +21,6 @@ public class BufferElement {
         this.correctlyPredictedEvents = 0;
         this.squaredError = 0;
         this.timeIndices = timeIndices;
+        this.trainedCluster = false;
     }
 }

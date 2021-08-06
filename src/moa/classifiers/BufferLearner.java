@@ -114,7 +114,7 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
     }
 
     private int[] getTimeIndices(String value) {
-        if (value == "") return new int[0];
+        if (value.equals("")) return new int[0];
         String[] strIndices = value.split(",");
         int[] ret = new int[strIndices.length];
         for (int i = 0; i < strIndices.length; i++) {

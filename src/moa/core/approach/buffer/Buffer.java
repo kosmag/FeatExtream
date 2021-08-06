@@ -13,7 +13,7 @@ abstract public class Buffer {
     public int size;
     int attributeLength;
     double relevanceRatio;
-    Deque<BufferElement> elements;
+    public Deque<BufferElement> elements;
     boolean fullSize;
     int[] timeIndices;
     int[] bufferIndices;
@@ -108,10 +108,9 @@ abstract public class Buffer {
         }
         return ret;
     }
- int counter = 0;
+
     public Instance[] getInstances(double[] current) {
 
-//        System.out.println(counter++);
         Instance[] ret = new Instance[elements.size()];
         int index = 0;
         for (BufferElement elem : elements) {

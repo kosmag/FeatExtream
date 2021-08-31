@@ -261,7 +261,7 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
     @Override
     public void setModelContext(InstancesHeader ih) {
         super.setModelContext(ih);
-        learner.setModelContext(ih);
+        learner.setModelContext(this.getHeader(modelContext, this.featureExtractor));
         relevanceModel.setModelContext(ih);
     }
 

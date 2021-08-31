@@ -104,7 +104,10 @@ abstract public class Buffer {
             index++;
         }
         for (; index < size; index++) {
-            ret[index] = new double[bufferIndices.length];
+            if (bufferIndices[0] != -1)
+                ret[index] = new double[bufferIndices.length];
+            else
+                ret[index] = new double[attributeLength];
         }
         return ret;
     }

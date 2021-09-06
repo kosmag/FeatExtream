@@ -215,6 +215,10 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
 
         double[] values = featureExtractor.getResult(originalValues, partitionBuffer);
 
+        for (int i = 0; i < values.length; i++)
+            if(Double.isNaN(values[i]))
+                values[i] = -Double.MAX_VALUE;
+
         Instance ret = InstanceUtils.generateInstanceFromValues(values, newHeader);
 
         return ret;

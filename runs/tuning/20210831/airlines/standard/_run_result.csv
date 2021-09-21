@@ -1,0 +1,7 @@
+rules.functions.TargetMean,34.22,21.01
+rules.functions.FadingTargetMean,33.47,20.01
+functions.AdaGrad,33.31,19.91
+meta.AdaptiveRandomForestRegressor -s 10,33.42,19.47
+meta.AdaptiveRandomForestRegressor -s 10 -m 80,33.53,19.58
+rules.AMRulesRegressor,33.10,18.99
+trees.ARFFIMTDD,34.32,21.88

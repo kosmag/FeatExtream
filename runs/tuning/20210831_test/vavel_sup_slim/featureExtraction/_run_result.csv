@@ -1,0 +1,35 @@
+featureExtraction,meta.AdaptiveRandomForestRegressor -s 10,28,25,-1,0,5,7,9,1,2,3,4,6,8,11,12,clustream,relevance,0.30000000000000004,8.55,79.74
+featureExtraction,meta.AdaptiveRandomForestRegressor -s 10 -m 80,28,7,-1,0,5,7,9,4,8,12,clustree,relevance,0.25,10.02,78.49
+featureExtraction,meta.AdaptiveRandomForestRegressor -s 10,18,5,14,0,5,7,9,1,2,3,4,6,8,11,12,clustree,relevance,0.6000000000000001,9.29,79.05
+featureExtraction,meta.AdaptiveRandomForestRegressor -s 10,5,13,14,0,5,7,9,-1,clustree,random,0.25,9.73,77.12
+featureExtraction,functions.AdaGrad,43,7,-1,0,5,7,9,1,2,3,4,6,8,11,12,clustream,relevance,0.15000000000000002,5326640.60,4274812.00
+featureExtraction,trees.ARFFIMTDD,43,3,-1,0,5,7,9,4,8,clustree,random,0.8,8.65,78.39
+featureExtraction,trees.ARFFIMTDD,65,2,14,0,5,7,9,4,8,clustream,relevance,1.0,8.65,78.39
+featureExtraction,rules.functions.TargetMean,2,13,-1,0,5,7,9,4,8,12,clustream,relevance,0.75,8.65,78.39
+featureExtraction,rules.AMRulesRegressor,8,3,14,0,5,7,9,-1,clustream,relevance,0.5,8.65,78.39
+featureExtraction,rules.AMRulesRegressor,100,3,-1,0,5,7,9,4,8,12,clustream,relevance,0.4,8.65,78.39
+featureExtraction,meta.AdaptiveRandomForestRegressor -s 10 -m 80,5,13,14,0,5,7,9,-1,clustree,random,0.25,8.92,77.52
+featureExtraction,rules.functions.TargetMean,5,13,14,0,5,7,9,-1,clustree,random,0.25,8.65,78.39
+featureExtraction,trees.ARFFIMTDD,5,13,14,0,5,7,9,-1,clustree,random,0.25,8.65,78.39
+featureExtraction,functions.AdaGrad,5,13,14,0,5,7,9,-1,clustree,random,0.25,5326640.64,4274811.92
+featureExtraction,meta.AdaptiveRandomForestRegressor -s 10 -m 80,1,13,14,0,5,7,9,-1,clustree,random,0.25,10.10,78.60
+featureExtraction,meta.AdaptiveRandomForestRegressor -s 10 -m 80,28,13,14,0,5,7,9,-1,clustree,random,0.25,10.24,78.29
+featureExtraction,meta.AdaptiveRandomForestRegressor -s 10 -m 80,43,13,14,0,5,7,9,-1,clustree,random,0.25,9.76,77.55
+featureExtraction,meta.AdaptiveRandomForestRegressor -s 10 -m 80,18,13,14,0,5,7,9,-1,clustree,random,0.25,9.86,78.55
+featureExtraction,meta.AdaptiveRandomForestRegressor -s 10 -m 80,5,5,14,0,5,7,9,-1,clustree,random,0.25,8.92,77.52
+featureExtraction,meta.AdaptiveRandomForestRegressor -s 10 -m 80,5,3,14,0,5,7,9,-1,clustree,random,0.25,8.92,77.52
+featureExtraction,meta.AdaptiveRandomForestRegressor -s 10 -m 80,5,1,14,0,5,7,9,-1,clustree,random,0.25,8.92,77.52
+featureExtraction,meta.AdaptiveRandomForestRegressor -s 10 -m 80,5,25,14,0,5,7,9,-1,clustree,random,0.25,8.92,77.52
+featureExtraction,meta.AdaptiveRandomForestRegressor -s 10 -m 80,5,4,14,0,5,7,9,-1,clustree,random,0.25,8.92,77.52
+featureExtraction,meta.AdaptiveRandomForestRegressor -s 10 -m 80,5,13,-1,0,5,7,9,-1,clustree,random,0.25,8.92,77.52
+featureExtraction,meta.AdaptiveRandomForestRegressor -s 10 -m 80,5,13,13,0,5,7,9,-1,clustree,random,0.25,8.94,77.88
+featureExtraction,meta.AdaptiveRandomForestRegressor -s 10 -m 80,5,13,14,0,5,7,9,4,8,clustree,random,0.25,8.92,77.52
+featureExtraction,meta.AdaptiveRandomForestRegressor -s 10 -m 80,5,13,14,0,5,7,9,4,8,12,clustree,random,0.25,8.92,77.52
+featureExtraction,meta.AdaptiveRandomForestRegressor -s 10 -m 80,5,13,14,0,5,7,9,1,2,3,4,6,8,11,12,clustree,random,0.25,8.92,77.52
+featureExtraction,meta.AdaptiveRandomForestRegressor -s 10 -m 80,5,13,14,0,5,7,9,-1,clustream,random,0.25,8.89,77.54
+featureExtraction,meta.AdaptiveRandomForestRegressor -s 10 -m 80,5,13,14,0,5,7,9,-1,clustree,relevance,0.25,8.92,77.52
+featureExtraction,meta.AdaptiveRandomForestRegressor -s 10 -m 80,5,13,14,0,5,7,9,-1,clustree,random,0.55,8.92,77.52
+featureExtraction,meta.AdaptiveRandomForestRegressor -s 10 -m 80,5,13,14,0,5,7,9,-1,clustree,random,0.15000000000000002,8.92,77.52
+featureExtraction,meta.AdaptiveRandomForestRegressor -s 10 -m 80,5,13,14,0,5,7,9,-1,clustree,random,0.4,8.92,77.52
+featureExtraction,meta.AdaptiveRandomForestRegressor -s 10 -m 80,5,13,14,0,5,7,9,-1,clustree,random,0.6000000000000001,8.92,77.52
+featureExtraction,meta.AdaptiveRandomForestRegressor -s 10 -m 80,5,13,14,0,5,7,9,-1,clustree,random,0.1,8.92,77.52

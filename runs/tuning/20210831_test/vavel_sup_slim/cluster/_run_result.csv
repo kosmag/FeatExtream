@@ -1,0 +1,34 @@
+cluster,meta.AdaptiveRandomForestRegressor -s 10,28,25,-1,0,5,7,9,1,2,3,4,6,8,11,12,clustream,relevance,0.30000000000000004,9.91,76.11
+cluster,meta.AdaptiveRandomForestRegressor -s 10 -m 80,28,7,-1,0,5,7,9,4,8,12,clustree,relevance,0.25,9.57,79.99
+cluster,meta.AdaptiveRandomForestRegressor -s 10,18,5,14,0,5,7,9,1,2,3,4,6,8,11,12,clustree,relevance,0.6000000000000001,9.86,77.04
+cluster,meta.AdaptiveRandomForestRegressor -s 10,5,13,14,0,5,7,9,-1,clustree,random,0.25,10.06,78.64
+cluster,functions.AdaGrad,43,7,-1,0,5,7,9,1,2,3,4,6,8,11,12,clustream,relevance,0.15000000000000002,5326640.64,4274811.92
+cluster,trees.ARFFIMTDD,43,3,-1,0,5,7,9,4,8,clustree,random,0.8,8.65,78.39
+cluster,trees.ARFFIMTDD,65,2,14,0,5,7,9,4,8,clustream,relevance,1.0,8.65,78.39
+cluster,rules.functions.TargetMean,2,13,-1,0,5,7,9,4,8,12,clustream,relevance,0.75,8.65,78.39
+cluster,rules.AMRulesRegressor,8,3,14,0,5,7,9,-1,clustream,relevance,0.5,8.65,78.39
+cluster,rules.AMRulesRegressor,100,3,-1,0,5,7,9,4,8,12,clustream,relevance,0.4,8.65,78.39
+cluster,meta.AdaptiveRandomForestRegressor -s 10 -m 80,28,25,-1,0,5,7,9,1,2,3,4,6,8,11,12,clustream,relevance,0.30000000000000004,9.85,78.55
+cluster,rules.functions.TargetMean,28,25,-1,0,5,7,9,1,2,3,4,6,8,11,12,clustream,relevance,0.30000000000000004,8.65,78.39
+cluster,trees.ARFFIMTDD,28,25,-1,0,5,7,9,1,2,3,4,6,8,11,12,clustream,relevance,0.30000000000000004,8.65,78.39
+cluster,functions.AdaGrad,28,25,-1,0,5,7,9,1,2,3,4,6,8,11,12,clustream,relevance,0.30000000000000004,5326640.65,4274811.91
+cluster,rules.functions.TargetMean,1,25,-1,0,5,7,9,1,2,3,4,6,8,11,12,clustream,relevance,0.30000000000000004,8.65,78.39
+cluster,rules.functions.TargetMean,5,25,-1,0,5,7,9,1,2,3,4,6,8,11,12,clustream,relevance,0.30000000000000004,8.65,78.39
+cluster,rules.functions.TargetMean,43,25,-1,0,5,7,9,1,2,3,4,6,8,11,12,clustream,relevance,0.30000000000000004,8.65,78.39
+cluster,rules.functions.TargetMean,18,25,-1,0,5,7,9,1,2,3,4,6,8,11,12,clustream,relevance,0.30000000000000004,8.65,78.39
+cluster,rules.functions.TargetMean,28,5,-1,0,5,7,9,1,2,3,4,6,8,11,12,clustream,relevance,0.30000000000000004,8.65,78.39
+cluster,rules.functions.TargetMean,28,3,-1,0,5,7,9,1,2,3,4,6,8,11,12,clustream,relevance,0.30000000000000004,8.65,78.39
+cluster,rules.functions.TargetMean,28,1,-1,0,5,7,9,1,2,3,4,6,8,11,12,clustream,relevance,0.30000000000000004,8.65,78.39
+cluster,rules.functions.TargetMean,28,4,-1,0,5,7,9,1,2,3,4,6,8,11,12,clustream,relevance,0.30000000000000004,8.65,78.39
+cluster,rules.functions.TargetMean,28,25,13,0,5,7,9,1,2,3,4,6,8,11,12,clustream,relevance,0.30000000000000004,8.65,78.39
+cluster,rules.functions.TargetMean,28,25,14,0,5,7,9,1,2,3,4,6,8,11,12,clustream,relevance,0.30000000000000004,8.65,78.39
+cluster,rules.functions.TargetMean,28,25,-1,0,5,7,9,-1,clustream,relevance,0.30000000000000004,8.65,78.39
+cluster,rules.functions.TargetMean,28,25,-1,0,5,7,9,4,8,clustream,relevance,0.30000000000000004,8.65,78.39
+cluster,rules.functions.TargetMean,28,25,-1,0,5,7,9,4,8,12,clustream,relevance,0.30000000000000004,8.65,78.39
+cluster,rules.functions.TargetMean,28,25,-1,0,5,7,9,1,2,3,4,6,8,11,12,clustree,relevance,0.30000000000000004,8.65,78.39
+cluster,rules.functions.TargetMean,28,25,-1,0,5,7,9,1,2,3,4,6,8,11,12,clustream,random,0.30000000000000004,8.65,78.39
+cluster,rules.functions.TargetMean,28,25,-1,0,5,7,9,1,2,3,4,6,8,11,12,clustream,relevance,0.55,8.65,78.39
+cluster,rules.functions.TargetMean,28,25,-1,0,5,7,9,1,2,3,4,6,8,11,12,clustream,relevance,0.15000000000000002,8.65,78.39
+cluster,rules.functions.TargetMean,28,25,-1,0,5,7,9,1,2,3,4,6,8,11,12,clustream,relevance,0.4,8.65,78.39
+cluster,rules.functions.TargetMean,28,25,-1,0,5,7,9,1,2,3,4,6,8,11,12,clustream,relevance,0.6000000000000001,8.65,78.39
+cluster,rules.functions.TargetMean,28,25,-1,0,5,7,9,1,2,3,4,6,8,11,12,clustream,relevance,0.1,8.65,78.39

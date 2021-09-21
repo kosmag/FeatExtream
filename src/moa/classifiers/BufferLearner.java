@@ -114,7 +114,7 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
     }
 
     private int[] getTimeIndices(String value) {
-        if (value == "") return new int[0];
+        if (value.equals("")) return new int[0];
         String[] strIndices = value.split(",");
         int[] ret = new int[strIndices.length];
         for (int i = 0; i < strIndices.length; i++) {
@@ -215,6 +215,10 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
 
         double[] values = featureExtractor.getResult(originalValues, partitionBuffer);
 
+        for (int i = 0; i < values.length; i++)
+            if(Double.isNaN(values[i]))
+                values[i] = -Double.MAX_VALUE;
+
         Instance ret = InstanceUtils.generateInstanceFromValues(values, newHeader);
 
         return ret;
@@ -261,7 +265,7 @@ public class BufferLearner extends AbstractClassifier implements MultiClassClass
     @Override
     public void setModelContext(InstancesHeader ih) {
         super.setModelContext(ih);
-        learner.setModelContext(ih);
+        learner.setModelContext(this.getHeader(modelContext, this.featureExtractor));
         relevanceModel.setModelContext(ih);
     }
 

@@ -1,0 +1,33 @@
+cluster,trees.HoeffdingAdaptiveTree,28,25,-1,0,2,-1,clustream,relevance,0.30000000000000004,5.93,80.20
+cluster,meta.OzaBagAdwin,12,2,-1,0,2,-1,clustream,random,1.0,5.11,83.98
+cluster,trees.HoeffdingAdaptiveTree,18,5,1,0,2,-1,clustream,relevance,0.25,4.52,83.28
+cluster,bayes.NaiveBayes,28,25,1,0,2,-1,clustree,random,0.35000000000000003,6.93,70.06
+cluster,meta.AdaptiveRandomForest -s 10 -m 80,5,7,1,0,2,-1,clustree,relevance,0.8500000000000001,2.16,88.80
+cluster,bayes.NaiveBayes,18,4,-1,0,2,-1,clustream,random,0.9,8.23,72.95
+cluster,lazy.SAMkNN,18,25,1,0,2,-1,clustree,relevance,0.30000000000000004,2.08,81.29
+cluster,meta.AdaptiveRandomForest -s 10 -m 80,18,10,1,0,2,-1,clustree,random,0.2,2.40,89.52
+cluster,meta.OzaBagAdwin,8,3,-1,0,2,-1,clustream,relevance,0.7000000000000001,5.21,84.05
+cluster,functions.MajorityClass,43,1,1,0,2,-1,clustree,relevance,0.75,6.44,57.60
+cluster,functions.MajorityClass,18,10,1,0,2,-1,clustree,random,0.2,6.44,57.60
+cluster,bayes.NaiveBayes,18,10,1,0,2,-1,clustree,random,0.2,7.98,72.02
+cluster,trees.HoeffdingAdaptiveTree,18,10,1,0,2,-1,clustree,random,0.2,5.91,81.93
+cluster,meta.AdaptiveRandomForest -s 10,18,10,1,0,2,-1,clustree,random,0.2,2.44,89.36
+cluster,meta.OzaBagAdwin,18,10,1,0,2,-1,clustree,random,0.2,5.00,83.89
+cluster,meta.AdaptiveRandomForest -s 10,5,10,1,0,2,-1,clustree,random,0.2,2.42,88.81
+cluster,meta.AdaptiveRandomForest -s 10,28,10,1,0,2,-1,clustree,random,0.2,2.17,89.49
+cluster,meta.AdaptiveRandomForest -s 10,65,10,1,0,2,-1,clustree,random,0.2,2.31,90.09
+cluster,meta.AdaptiveRandomForest -s 10,8,10,1,0,2,-1,clustree,random,0.2,2.36,88.90
+cluster,meta.AdaptiveRandomForest -s 10,12,10,1,0,2,-1,clustree,random,0.2,2.34,89.22
+cluster,meta.AdaptiveRandomForest -s 10,65,3,1,0,2,-1,clustree,random,0.2,2.27,89.73
+cluster,meta.AdaptiveRandomForest -s 10,65,1,1,0,2,-1,clustree,random,0.2,2.20,88.77
+cluster,meta.AdaptiveRandomForest -s 10,65,13,1,0,2,-1,clustree,random,0.2,2.36,90.01
+cluster,meta.AdaptiveRandomForest -s 10,65,25,1,0,2,-1,clustree,random,0.2,2.24,89.61
+cluster,meta.AdaptiveRandomForest -s 10,65,18,1,0,2,-1,clustree,random,0.2,2.08,90.06
+cluster,meta.AdaptiveRandomForest -s 10,65,10,-1,0,2,-1,clustree,random,0.2,2.03,90.60
+cluster,meta.AdaptiveRandomForest -s 10,65,10,-1,0,2,-1,clustream,random,0.2,2.04,90.08
+cluster,meta.AdaptiveRandomForest -s 10,65,10,-1,0,2,-1,clustree,relevance,0.2,2.25,90.65
+cluster,meta.AdaptiveRandomForest -s 10,65,10,-1,0,2,-1,clustree,relevance,0.4,2.23,90.44
+cluster,meta.AdaptiveRandomForest -s 10,65,10,-1,0,2,-1,clustree,relevance,0.6000000000000001,2.09,90.30
+cluster,meta.AdaptiveRandomForest -s 10,65,10,-1,0,2,-1,clustree,relevance,0.1,1.88,90.48
+cluster,meta.AdaptiveRandomForest -s 10,65,10,-1,0,2,-1,clustree,relevance,0.7000000000000001,2.08,89.99
+cluster,meta.AdaptiveRandomForest -s 10,65,10,-1,0,2,-1,clustree,relevance,0.25,2.07,90.48

@@ -1,0 +1,32 @@
+cluster,trees.HoeffdingAdaptiveTree,28,25,-1,,-1,clustream,relevance,0.30000000000000004,8.06,69.86
+cluster,meta.OzaBagAdwin,12,2,-1,,-1,clustream,random,1.0,3.48,77.62
+cluster,trees.HoeffdingAdaptiveTree,18,5,-1,,-1,clustream,relevance,0.25,4.27,75.16
+cluster,bayes.NaiveBayes,28,25,-1,,-1,clustree,random,0.35000000000000003,8.43,71.26
+cluster,meta.AdaptiveRandomForest -s 10 -m 80,5,7,-1,,-1,clustree,relevance,0.8500000000000001,2.19,84.34
+cluster,bayes.NaiveBayes,18,4,-1,,-1,clustream,random,0.9,4.08,75.86
+cluster,lazy.SAMkNN,18,25,-1,,-1,clustree,relevance,0.30000000000000004,5.60,54.16
+cluster,meta.AdaptiveRandomForest -s 10 -m 80,18,10,-1,,-1,clustree,random,0.2,1.93,84.80
+cluster,meta.OzaBagAdwin,8,3,-1,,-1,clustream,relevance,0.7000000000000001,3.17,78.80
+cluster,functions.MajorityClass,43,1,-1,,-1,clustree,relevance,0.75,5.63,38.68
+cluster,functions.MajorityClass,18,10,-1,,-1,clustree,random,0.2,5.63,38.68
+cluster,bayes.NaiveBayes,18,10,-1,,-1,clustree,random,0.2,4.40,74.90
+cluster,trees.HoeffdingAdaptiveTree,18,10,-1,,-1,clustree,random,0.2,4.65,74.94
+cluster,meta.AdaptiveRandomForest -s 10,18,10,-1,,-1,clustree,random,0.2,2.42,85.60
+cluster,meta.OzaBagAdwin,18,10,-1,,-1,clustree,random,0.2,2.67,79.42
+cluster,meta.AdaptiveRandomForest -s 10,5,10,-1,,-1,clustree,random,0.2,3.41,83.90
+cluster,meta.AdaptiveRandomForest -s 10,28,10,-1,,-1,clustree,random,0.2,3.10,84.24
+cluster,meta.AdaptiveRandomForest -s 10,65,10,-1,,-1,clustree,random,0.2,2.01,85.52
+cluster,meta.AdaptiveRandomForest -s 10,8,10,-1,,-1,clustree,random,0.2,3.14,84.48
+cluster,meta.AdaptiveRandomForest -s 10,12,10,-1,,-1,clustree,random,0.2,2.18,85.70
+cluster,meta.AdaptiveRandomForest -s 10,12,3,-1,,-1,clustree,random,0.2,1.71,85.46
+cluster,meta.AdaptiveRandomForest -s 10,12,1,-1,,-1,clustree,random,0.2,1.79,83.66
+cluster,meta.AdaptiveRandomForest -s 10,12,13,-1,,-1,clustree,random,0.2,2.53,84.56
+cluster,meta.AdaptiveRandomForest -s 10,12,25,-1,,-1,clustree,random,0.2,1.69,85.70
+cluster,meta.AdaptiveRandomForest -s 10,12,18,-1,,-1,clustree,random,0.2,2.25,84.64
+cluster,meta.AdaptiveRandomForest -s 10,12,10,-1,,-1,clustream,random,0.2,2.19,84.34
+cluster,meta.AdaptiveRandomForest -s 10,12,10,-1,,-1,clustree,relevance,0.2,2.47,84.38
+cluster,meta.AdaptiveRandomForest -s 10,12,10,-1,,-1,clustree,random,0.4,2.39,84.28
+cluster,meta.AdaptiveRandomForest -s 10,12,10,-1,,-1,clustree,random,0.6000000000000001,2.16,83.62
+cluster,meta.AdaptiveRandomForest -s 10,12,10,-1,,-1,clustree,random,0.1,3.07,84.42
+cluster,meta.AdaptiveRandomForest -s 10,12,10,-1,,-1,clustree,random,0.7000000000000001,3.21,84.42
+cluster,meta.AdaptiveRandomForest -s 10,12,10,-1,,-1,clustree,random,0.25,2.68,83.80

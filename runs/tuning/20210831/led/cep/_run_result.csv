@@ -1,0 +1,31 @@
+cep,trees.HoeffdingAdaptiveTree,28,25,-1,,-1,clustream,relevance,0.30000000000000004,12.85,26.02
+cep,meta.OzaBagAdwin,12,2,-1,,-1,clustream,random,1.0,4.73,16.86
+cep,trees.HoeffdingAdaptiveTree,18,5,-1,,-1,clustream,relevance,0.25,12.83,43.10
+cep,bayes.NaiveBayes,28,25,-1,,-1,clustree,random,0.35000000000000003,1.22,10.30
+cep,meta.AdaptiveRandomForest -s 10 -m 80,5,7,-1,,-1,clustree,relevance,0.8500000000000001,8.81,71.43
+cep,bayes.NaiveBayes,18,4,-1,,-1,clustream,random,0.9,15.18,35.51
+cep,lazy.SAMkNN,18,25,-1,,-1,clustree,relevance,0.30000000000000004,2.80,17.58
+cep,meta.AdaptiveRandomForest -s 10 -m 80,18,10,-1,,-1,clustree,random,0.2,9.86,70.83
+cep,meta.OzaBagAdwin,8,3,-1,,-1,clustream,relevance,0.7000000000000001,6.04,54.02
+cep,functions.MajorityClass,43,1,-1,,-1,clustree,relevance,0.75,1.09,10.15
+cep,functions.MajorityClass,5,7,-1,,-1,clustree,relevance,0.8500000000000001,1.09,10.15
+cep,bayes.NaiveBayes,5,7,-1,,-1,clustree,relevance,0.8500000000000001,10.44,61.97
+cep,trees.HoeffdingAdaptiveTree,5,7,-1,,-1,clustree,relevance,0.8500000000000001,10.37,50.75
+cep,meta.AdaptiveRandomForest -s 10,5,7,-1,,-1,clustree,relevance,0.8500000000000001,6.73,72.11
+cep,meta.OzaBagAdwin,5,7,-1,,-1,clustree,relevance,0.8500000000000001,10.26,58.05
+cep,meta.AdaptiveRandomForest -s 10,28,7,-1,,-1,clustree,relevance,0.8500000000000001,8.32,71.61
+cep,meta.AdaptiveRandomForest -s 10,65,7,-1,,-1,clustree,relevance,0.8500000000000001,7.49,71.87
+cep,meta.AdaptiveRandomForest -s 10,8,7,-1,,-1,clustree,relevance,0.8500000000000001,9.20,71.02
+cep,meta.AdaptiveRandomForest -s 10,12,7,-1,,-1,clustree,relevance,0.8500000000000001,7.88,71.95
+cep,meta.AdaptiveRandomForest -s 10,5,3,-1,,-1,clustree,relevance,0.8500000000000001,5.41,72.25
+cep,meta.AdaptiveRandomForest -s 10,5,1,-1,,-1,clustree,relevance,0.8500000000000001,3.75,72.83
+cep,meta.AdaptiveRandomForest -s 10,5,13,-1,,-1,clustree,relevance,0.8500000000000001,7.68,71.68
+cep,meta.AdaptiveRandomForest -s 10,5,25,-1,,-1,clustree,relevance,0.8500000000000001,12.33,70.38
+cep,meta.AdaptiveRandomForest -s 10,5,18,-1,,-1,clustree,relevance,0.8500000000000001,9.93,70.23
+cep,meta.AdaptiveRandomForest -s 10,5,1,-1,,-1,clustream,relevance,0.8500000000000001,3.75,72.83
+cep,meta.AdaptiveRandomForest -s 10,5,1,-1,,-1,clustree,random,0.8500000000000001,3.75,72.83
+cep,meta.AdaptiveRandomForest -s 10,5,1,-1,,-1,clustree,relevance,0.4,3.75,72.83
+cep,meta.AdaptiveRandomForest -s 10,5,1,-1,,-1,clustree,relevance,0.6000000000000001,3.75,72.83
+cep,meta.AdaptiveRandomForest -s 10,5,1,-1,,-1,clustree,relevance,0.1,3.75,72.83
+cep,meta.AdaptiveRandomForest -s 10,5,1,-1,,-1,clustree,relevance,0.7000000000000001,3.75,72.83
+cep,meta.AdaptiveRandomForest -s 10,5,1,-1,,-1,clustree,relevance,0.25,3.75,72.83

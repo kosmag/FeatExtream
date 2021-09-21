@@ -2,11 +2,17 @@ package moa.core.approach.clusterer;
 
 import com.yahoo.labs.samoa.instances.Instance;
 import com.yahoo.labs.samoa.instances.InstancesHeader;
+import moa.cluster.CFCluster;
 import moa.cluster.Clustering;
 import moa.clusterers.AbstractClusterer;
 import moa.clusterers.clustream.Clustream;
+import moa.clusterers.clustream.ClustreamKernel;
+import moa.clusterers.clustree.ClusKernel;
 import moa.clusterers.clustree.ClusTree;
 import moa.core.approach.util.InstanceUtils;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class ClusterHelper {
 
@@ -27,9 +33,12 @@ public class ClusterHelper {
             case "clustream":
                 clusterer = new Clustream();
                 ((Clustream) clusterer).maxNumKernelsOption.setValue(numClusters);
+                ((Clustream) clusterer).kernelRadiFactorOption.setValue(10);
                 break;
             case "clustree":
                 clusterer = new ClusTree();
+                ((ClusTree) clusterer).maxHeightOption.setValue(3);
+                ((ClusTree) clusterer).breadthFirstStrategyOption.set();
                 break;
         }
         clusterer.prepareForUse();
@@ -68,9 +77,9 @@ public class ClusterHelper {
             if (c1 != -1)
                 for (int j = i + 1; j < bufferInstances.length; j++) {
                     int c2 = clusterValues[j];
-                    if(c2 != -1)
+                    if (c2 != -1)
                         cepClusterings[c1][c2]++;
-            }
+                }
         }
         return InstanceUtils.concatenate(cepClusterings);
     }
@@ -88,9 +97,16 @@ public class ClusterHelper {
 
     private int getMaxClusterIndex(Instance inst, Clustering clustering) {
         int maxClusterIndex = -1;
-        double maxClusterValue = 0;
+        double maxClusterValue = 0.25;
         for (int j = 0; j < clustering.size(); j++) {
-            double prob = clustering.get(j).getInclusionProbability(inst);
+            double dist = calcNormalizedDistance(inst.toDoubleArray(), (CFCluster) clustering.get(j));
+            double radius =  ((CFCluster) clustering.get(j)).getRadius();
+            double prob = 0;
+            if(dist == 0)
+                prob = Double.MAX_VALUE;
+            else
+                prob = radius / dist;
+
             if (prob > maxClusterValue) {
                 maxClusterValue = prob;
                 maxClusterIndex = j;
@@ -98,7 +114,16 @@ public class ClusterHelper {
         }
         return maxClusterIndex;
     }
+    private double calcNormalizedDistance(double[] point, CFCluster kernel ) {
+        double[] center = kernel.getCenter();
+        double res = 0.0;
 
+        for (int i = 0; i < center.length; i++) {
+            double diff = center[i] - point[i];
+            res += (diff * diff);
+        }
+        return Math.sqrt(res);
+    }
     private double[][] initClusterings() {
         double[][] ret = new double[numClusters][];
         for (int i = 0; i < numClusters; i++) {

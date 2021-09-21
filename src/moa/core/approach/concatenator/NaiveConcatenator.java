@@ -30,7 +30,7 @@ public class NaiveConcatenator extends FeatureExtractor {
         for (int i = 0; i < bufferSize; i++) {
             for (int j = 0; j < originalHeader.numAttributes(); j++) {
                 Attribute att = originalHeader.attribute(j);
-                attributes.add(att);
+                attributes.add(new Attribute(att.name() + "_" + i));
             }
         }
         return attributes;

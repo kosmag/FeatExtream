@@ -1,0 +1,16 @@
+naive,trees.HoeffdingAdaptiveTree,28,25,-1,,-1,clustream,relevance,0.30000000000000004,5.76,39.10
+naive,meta.OzaBagAdwin,12,2,-1,,-1,clustream,random,1.0,3.12,75.68
+naive,trees.HoeffdingAdaptiveTree,18,5,-1,,-1,clustream,relevance,0.25,6.40,39.68
+naive,bayes.NaiveBayes,28,25,-1,,-1,clustree,random,0.35000000000000003,13.83,55.68
+naive,meta.AdaptiveRandomForest -m 80,5,7,-1,,-1,clustree,relevance,0.8500000000000001,2.09,83.42
+naive,bayes.NaiveBayes,18,4,-1,,-1,clustream,random,0.9,3.57,72.50
+naive,lazy.SAMkNN,18,25,-1,,-1,clustree,relevance,0.30000000000000004,5.67,38.74
+naive,meta.AdaptiveRandomForest -m 80,18,10,-1,,-1,clustree,random,0.2,4.80,68.02
+naive,meta.OzaBagAdwin,8,3,-1,,-1,clustream,relevance,0.7000000000000001,11.49,71.88
+naive,functions.MajorityClass,43,1,-1,,-1,clustree,relevance,0.75,5.63,38.68
+naive,functions.MajorityClass,5,7,-1,,-1,clustree,relevance,0.8500000000000001,5.63,38.68
+naive,bayes.NaiveBayes,5,7,-1,,-1,clustree,relevance,0.8500000000000001,5.89,39.72
+naive,trees.HoeffdingAdaptiveTree,5,7,-1,,-1,clustree,relevance,0.8500000000000001,13.21,48.22
+naive,meta.AdaptiveRandomForest,5,7,-1,,-1,clustree,relevance,0.8500000000000001,2.06,84.54
+naive,meta.OzaBagAdwin,5,7,-1,,-1,clustree,relevance,0.8500000000000001,6.52,76.26
+naive,meta.AdaptiveRandomForest,28,7,-1,,-1,clustree,relevance,0.8500000000000001,2.47,84.96

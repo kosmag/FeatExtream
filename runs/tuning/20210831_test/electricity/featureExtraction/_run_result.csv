@@ -1,0 +1,32 @@
+featureExtraction,trees.HoeffdingAdaptiveTree,28,25,-1,0,2,-1,clustream,relevance,0.30000000000000004,13.59,60.67
+featureExtraction,meta.OzaBagAdwin,12,2,-1,0,2,-1,clustream,random,1.0,14.05,60.16
+featureExtraction,trees.HoeffdingAdaptiveTree,18,5,1,0,2,-1,clustream,relevance,0.25,13.59,60.67
+featureExtraction,bayes.NaiveBayes,28,25,1,0,2,-1,clustree,random,0.35000000000000003,16.37,52.93
+featureExtraction,meta.AdaptiveRandomForest -s 10 -m 80,5,7,1,0,2,-1,clustree,relevance,0.8500000000000001,9.72,77.03
+featureExtraction,bayes.NaiveBayes,18,4,-1,0,2,-1,clustream,random,0.9,16.04,54.05
+featureExtraction,lazy.SAMkNN,18,25,1,0,2,-1,clustree,relevance,0.30000000000000004,17.19,52.54
+featureExtraction,meta.AdaptiveRandomForest -s 10 -m 80,18,10,1,0,2,-1,clustree,random,0.2,12.23,67.14
+featureExtraction,meta.OzaBagAdwin,8,3,-1,0,2,-1,clustream,relevance,0.7000000000000001,11.51,69.73
+featureExtraction,functions.MajorityClass,43,1,1,0,2,-1,clustree,relevance,0.75,16.47,52.56
+featureExtraction,functions.MajorityClass,5,7,1,0,2,-1,clustree,relevance,0.8500000000000001,16.47,52.56
+featureExtraction,bayes.NaiveBayes,5,7,1,0,2,-1,clustree,relevance,0.8500000000000001,11.42,69.03
+featureExtraction,trees.HoeffdingAdaptiveTree,5,7,1,0,2,-1,clustree,relevance,0.8500000000000001,12.44,67.35
+featureExtraction,meta.AdaptiveRandomForest -s 10,5,7,1,0,2,-1,clustree,relevance,0.8500000000000001,15.21,62.89
+featureExtraction,meta.OzaBagAdwin,5,7,1,0,2,-1,clustree,relevance,0.8500000000000001,10.39,71.03
+featureExtraction,meta.OzaBagAdwin,28,7,1,0,2,-1,clustree,relevance,0.8500000000000001,13.15,62.97
+featureExtraction,meta.OzaBagAdwin,65,7,1,0,2,-1,clustree,relevance,0.8500000000000001,12.25,64.67
+featureExtraction,meta.OzaBagAdwin,8,7,1,0,2,-1,clustree,relevance,0.8500000000000001,12.43,64.03
+featureExtraction,meta.OzaBagAdwin,12,7,1,0,2,-1,clustree,relevance,0.8500000000000001,13.72,62.09
+featureExtraction,meta.OzaBagAdwin,5,3,1,0,2,-1,clustree,relevance,0.8500000000000001,10.39,71.03
+featureExtraction,meta.OzaBagAdwin,5,1,1,0,2,-1,clustree,relevance,0.8500000000000001,10.39,71.03
+featureExtraction,meta.OzaBagAdwin,5,13,1,0,2,-1,clustree,relevance,0.8500000000000001,10.39,71.03
+featureExtraction,meta.OzaBagAdwin,5,25,1,0,2,-1,clustree,relevance,0.8500000000000001,10.39,71.03
+featureExtraction,meta.OzaBagAdwin,5,18,1,0,2,-1,clustree,relevance,0.8500000000000001,10.39,71.03
+featureExtraction,meta.OzaBagAdwin,5,7,-1,0,2,-1,clustree,relevance,0.8500000000000001,10.39,71.03
+featureExtraction,meta.OzaBagAdwin,5,7,1,0,2,-1,clustream,relevance,0.8500000000000001,7.10,80.28
+featureExtraction,meta.OzaBagAdwin,5,7,1,0,2,-1,clustream,random,0.8500000000000001,7.73,79.51
+featureExtraction,meta.OzaBagAdwin,5,7,1,0,2,-1,clustream,relevance,0.4,7.00,81.43
+featureExtraction,meta.OzaBagAdwin,5,7,1,0,2,-1,clustream,relevance,0.6000000000000001,7.10,80.28
+featureExtraction,meta.OzaBagAdwin,5,7,1,0,2,-1,clustream,relevance,0.1,7.13,80.54
+featureExtraction,meta.OzaBagAdwin,5,7,1,0,2,-1,clustream,relevance,0.7000000000000001,7.10,80.28
+featureExtraction,meta.OzaBagAdwin,5,7,1,0,2,-1,clustream,relevance,0.25,7.10,80.28

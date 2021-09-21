@@ -1,0 +1,32 @@
+cep,meta.AdaptiveRandomForestRegressor -s 10,28,25,-1,,-1,clustream,relevance,0.30000000000000004,2.84,17.74
+cep,meta.AdaptiveRandomForestRegressor -s 10 -m 80,28,7,-1,,-1,clustree,relevance,0.25,2.81,17.42
+cep,meta.AdaptiveRandomForestRegressor -s 10,18,5,10,,-1,clustree,relevance,0.6000000000000001,2.85,17.40
+cep,meta.AdaptiveRandomForestRegressor -s 10,5,13,10,,-1,clustree,random,0.25,2.85,16.48
+cep,functions.AdaGrad,43,7,-1,,-1,clustream,relevance,0.15000000000000002,12.31,27.53
+cep,trees.ARFFIMTDD,43,3,-1,,-1,clustree,random,0.8,2.67,17.37
+cep,trees.ARFFIMTDD,65,2,10,,-1,clustream,relevance,1.0,2.67,17.37
+cep,rules.functions.TargetMean,2,13,-1,,-1,clustream,relevance,0.75,2.67,17.37
+cep,rules.AMRulesRegressor,8,3,10,,-1,clustream,relevance,0.5,2.67,17.37
+cep,rules.AMRulesRegressor,100,3,-1,,-1,clustream,relevance,0.4,2.67,17.37
+cep,meta.AdaptiveRandomForestRegressor -s 10 -m 80,5,13,10,,-1,clustree,random,0.25,2.86,17.39
+cep,rules.functions.TargetMean,5,13,10,,-1,clustree,random,0.25,2.67,17.37
+cep,trees.ARFFIMTDD,5,13,10,,-1,clustree,random,0.25,2.67,17.37
+cep,functions.AdaGrad,5,13,10,,-1,clustree,random,0.25,12.34,27.48
+cep,rules.functions.TargetMean,1,13,10,,-1,clustree,random,0.25,2.67,17.37
+cep,rules.functions.TargetMean,28,13,10,,-1,clustree,random,0.25,2.67,17.37
+cep,rules.functions.TargetMean,43,13,10,,-1,clustree,random,0.25,2.67,17.37
+cep,rules.functions.TargetMean,18,13,10,,-1,clustree,random,0.25,2.67,17.37
+cep,rules.functions.TargetMean,5,5,10,,-1,clustree,random,0.25,2.67,17.37
+cep,rules.functions.TargetMean,5,3,10,,-1,clustree,random,0.25,2.67,17.37
+cep,rules.functions.TargetMean,5,1,10,,-1,clustree,random,0.25,2.67,17.37
+cep,rules.functions.TargetMean,5,25,10,,-1,clustree,random,0.25,2.67,17.37
+cep,rules.functions.TargetMean,5,4,10,,-1,clustree,random,0.25,2.67,17.37
+cep,rules.functions.TargetMean,5,13,-1,,-1,clustree,random,0.25,2.67,17.37
+cep,rules.functions.TargetMean,5,13,9,,-1,clustree,random,0.25,2.67,17.37
+cep,rules.functions.TargetMean,5,13,10,,-1,clustream,random,0.25,2.67,17.37
+cep,rules.functions.TargetMean,5,13,10,,-1,clustree,relevance,0.25,2.67,17.37
+cep,rules.functions.TargetMean,5,13,10,,-1,clustree,random,0.55,2.67,17.37
+cep,rules.functions.TargetMean,5,13,10,,-1,clustree,random,0.15000000000000002,2.67,17.37
+cep,rules.functions.TargetMean,5,13,10,,-1,clustree,random,0.4,2.67,17.37
+cep,rules.functions.TargetMean,5,13,10,,-1,clustree,random,0.6000000000000001,2.67,17.37
+cep,rules.functions.TargetMean,5,13,10,,-1,clustree,random,0.1,2.67,17.37

@@ -1,5 +1,5 @@
 /*
- *    WindowRegressionPerformanceEvaluator.java
+ *    DelayedWindowRegressionPerformanceEvaluator.java
  *    Copyright (C) 2011 University of Waikato, Hamilton, New Zealand
  *    @author Albert Bifet (abifet at cs dot waikato dot ac dot nz)
  *
@@ -33,10 +33,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Regression evaluator that updates evaluation results using a sliding window.
+ * Regression evaluator that updates evaluation results using a sliding window in the delayed setting.
  *
  * @author Albert Bifet (abifet at cs dot waikato dot ac dot nz)
- * @version $Revision: 7 $
+ * @author Kosma Grochowski
+ * @version $Revision: 1 $
  */
 public class DelayedWindowRegressionPerformanceEvaluator extends AbstractOptionHandler
         implements RegressionPerformanceEvaluator {

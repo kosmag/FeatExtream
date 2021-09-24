@@ -1,5 +1,5 @@
 /*
- *    WindowClassificationPerformanceEvaluator.java
+ *    DelayedWindowClassificationPerformanceEvaluator.java
  *    Copyright (C) 2009 University of Waikato, Hamilton, New Zealand
  *    @author Albert Bifet (abifet@cs.waikato.ac.nz)
  *
@@ -34,11 +34,12 @@ import java.util.Map;
 
 /**
  * Classification evaluator that updates evaluation results using a sliding
- * window.
+ * window in a delayed setting.
  *
  * @author Albert Bifet (abifet at cs dot waikato dot ac dot nz)
  * @author Jean Paul Barddal (jpbarddal@gmail.com)
- * @version $Revision: 8 $
+ * @author Kosma Grochowski
+ * @version $Revision: 1 $
  *
  *
  */

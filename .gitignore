@@ -28,3 +28,7 @@ lib
 src/fixclasses.py
 src/classes.txt
 src/classes2.txt
+
+.ipynb_checkpoints
+data
+result*

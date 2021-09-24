@@ -1,6 +1,0 @@
-learning evaluation instances,evaluation time (cpu seconds),model cost (RAM-Hours),classified instances,classifications correct (percent),Kappa Statistic (percent),Kappa Temporal Statistic (percent),Kappa M Statistic (percent),model training instances,model serialized size (bytes)
-1.0,0.078125,6.490154191851616E-10,1.0,0.0,0.0,0.0,-Infinity,1.0,32112.0
-2.0,0.09375,8.32110850347413E-10,2.0,50.0,0.0,0.0,-Infinity,2.0,45296.0
-3.0,0.109375,1.0458623162574237E-9,3.0,66.66666666666666,0.0,0.0,-Infinity,3.0,52880.0
-4.0,0.125,1.290269816915194E-9,4.0,50.0,-33.33333333333333,0.0,-100.0,4.0,60464.0
-5.0,0.125,1.290269816915194E-9,5.0,40.0,-36.363636363636374,-49.999999999999986,-49.999999999999986,5.0,79248.0

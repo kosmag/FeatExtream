@@ -1,8 +1,0 @@
-functions.MajorityClass,0.00,38.68
-functions.NoChange,0.00,93.02
-lazy.SAMkNN,0.00,53.32
-bayes.NaiveBayes,0.00,75.52
-meta.AdaptiveRandomForest -s 10,0.00,84.98
-meta.AdaptiveRandomForest -s 10 -m 80,0.00,84.36
-trees.HoeffdingAdaptiveTree,0.00,75.24
-meta.OzaBagAdwin,0.00,78.48

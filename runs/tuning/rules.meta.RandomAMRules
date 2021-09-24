@@ -1,2 +1,0 @@
-learning evaluation instances,evaluation time (cpu seconds),model cost (RAM-Hours),classified instances,mean absolute error,root mean squared error,model training instances,model serialized size (bytes),ensemble size,Avg model training instances,Avg model serialized size (bytes),Avg anomaly detections,Avg change detections,Avg rules (number),Avg Avg #inputs/rule,Avg Avg #outputs/rule
-1000.0,10.78125,0.0014215681071315582,1000.0,42.855667089943395,56.76833366588166,1000.0,5.09688648E8,10.0,1000.0,6.82420056E7,0.0,0.0,1.7,27.0,1.0
